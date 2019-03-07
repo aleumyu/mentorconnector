@@ -21,6 +21,7 @@ router.get('/api/v1/users/:id/favorites', function(req, res, next) {
     })
 });
 
+
 router.post('/api/v1/users/:id/favorites', function(req, res, next) {
   db(`INSERT INTO favorites (userId, selectedUserId) VALUES (${req.params.id}, ${req.body.selectedUserId});`)
   .then(results => {

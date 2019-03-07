@@ -1,0 +1,30 @@
+import React, { Component } from 'react';
+
+
+class Landing extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.callAPI();
+  }
+
+  callAPI() {
+    // calls our backend on port 9000, modify this!
+    fetch("http://localhost:9000/")
+      .then(res => res.json())
+      .then(res => console.log(res));
+  }
+
+  render() {
+    return (
+      <div className="App">
+        This is Landing
+      </div>
+    );
+  }
+}
+
+export default Landing;
