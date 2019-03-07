@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+
 
 class Home extends Component {
 
@@ -7,21 +7,11 @@ class Home extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.callAPI();
-  }
-
-  callAPI() {
-    // calls our backend on port 9000, modify this!
-    fetch("http://localhost:9000/")
-      .then(res => res.json())
-      .then(res => console.log(res));
-  }
 
   render() {
     return (
       <div className="App">
-        Add your code!
+        This is Home
       </div>
     );
   }
