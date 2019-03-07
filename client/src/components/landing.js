@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+
 
 class Landing extends Component {
 
@@ -21,7 +21,7 @@ class Landing extends Component {
   render() {
     return (
       <div className="App">
-        Add your code!
+        This is Landing
       </div>
     );
   }
