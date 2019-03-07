@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
-  db(`SELECT photo, industry, jobType, location, firstName, lastName FROM user u INNER JOIN favorites f ON u.userId=f.userId WHERE f.userId=${req.params.id}`)
+  db(`SELECT f.userId, photo, industry, jobType, location, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
     .then(results => {
       if (results.error) {
         console.log('as');
@@ -22,7 +22,7 @@ router.get('/api/v1/users/:id/favorites', function(req, res, next) {
 });
 
 router.post('/api/v1/users/:id/favorites', function(req, res, next) {
-  db(`INSERT INTO favorites (userId, selectedUserId) VALUES (${req.body.userId}, ${req.body.selectedUserId};`)
+  db(`INSERT INTO favorites (userId, selectedUserId) VALUES (${req.params.id}, ${req.body.selectedUserId});`)
   .then(results => {
     if (results.error) {
       res.status(500).send(resutls.error);
@@ -32,7 +32,7 @@ router.post('/api/v1/users/:id/favorites', function(req, res, next) {
 });
 
 router.delete('/api/v1/users/:id1/favorites/:id2', function(req, res, next) {
-  db(`DELETE FROM favorites WHERE selectedUserId=${req.params.id2} AND userId=${req.params.id1};`)
+  db(`DELETE FROM favorites WHERE userId=${req.params.id1} AND selectedUserId=${req.params.id2};`)
   .then(results => {
     if (results.error) {
       res.status(500).send(results.error);
