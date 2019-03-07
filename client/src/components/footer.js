@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './footer.css';
 
 
 class Footer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
 
-  componentDidMount() {
-    this.callAPI();
-  }
-
-  callAPI() {
-    // calls our backend on port 9000, modify this!
-    fetch("http://localhost:9000/")
-      .then(res => res.json())
-      .then(res => console.log(res));
-  }
 
   render() {
     return (
       <div className="App">
-        Add your code!
+        
+        <div className="body">
+
+       
+
+          <footer className="footer">
+            <div className="container">
+              <span className="text-muted">Place sticky footer content here.</span>
+            </div>
+          </footer>
+
+        </div>
+
       </div>
+
     );
   }
 }
