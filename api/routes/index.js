@@ -8,8 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/api/v1/users/:id', (req, res, next) => {
-  console.log("hello");
-  db('SELECT * FROM users WHERE users.userId =' + `${req.params.id}`)
+  db('SELECT * FROM user WHERE user.userId =' + `${req.params.id}`)
     .then(results => {
       if (results.error) {
         res.status(500).send(results.error);
@@ -19,10 +18,9 @@ router.get('/api/v1/users/:id', (req, res, next) => {
     })
 });
 
-// http://localhost:9000/api/v1/users?role=${roleParam}&industry=${industryParam}&meeting=${meetingParam}&interests=${interestsParam}&location=${locationParam}`
+// http://localhost:9000/api/v1/user?role=${roleParam}&industry=${industryParam}&meeting=${meetingParam}&interests=${interestsParam}&location=${locationParam}`
 
-router.get('/api/v1/users', function (req, res, next) {
-  
+router.get('/api/v1/users/', function (req, res, next) {
   let industryParam = req.query.industry;
   let locationParam = req.query.location;
   let roleParam = req.query.role;
@@ -30,7 +28,7 @@ router.get('/api/v1/users', function (req, res, next) {
   let interestsParam = req.query.interest;
 
   if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
-    db('SELECT * FROM users ORDER BY id ASC;')
+    db('SELECT * FROM user ORDER BY id ASC;')
       .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
