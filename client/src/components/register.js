@@ -12,16 +12,15 @@ class Register extends Component {
       <Modal
         {...this.props}
         size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        aria-labelledby="contained-modal"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal">
             Register with MentorConnect
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
           <input className="text email" type="email" name="email" placeholder="Email" required="" />
 					<input className="text" type="password" name="password" placeholder="Password" required="" />
 					<input className="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="" />

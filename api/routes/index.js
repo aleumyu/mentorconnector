@@ -28,7 +28,7 @@ router.get('/api/v1/users/', function (req, res, next) {
   let interestsParam = req.query.interest;
 
   if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
-    db('SELECT * FROM user ORDER BY id ASC;')
+    db('SELECT * FROM user ORDER BY userId ASC;')
       .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
@@ -37,7 +37,7 @@ router.get('/api/v1/users/', function (req, res, next) {
         res.send(results.data);
       })
   } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {
-    db(`SELECT u.userId, industry, location, role, meeting, firstName FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.role="${roleParam}" AND u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role="${roleParam}" AND u.meeting="${meetingParam}" AND i.interestTag=${interestsParam};`)
+    db(`SELECT u.userId, industry, location, role, meeting, firstName FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)
       .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
