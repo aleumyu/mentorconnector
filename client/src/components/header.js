@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Button, Form } from 'react-bootstrap';
 
 
 
@@ -10,6 +10,25 @@ class Header extends Component {
 
   render() {
     return (
+      <Navbar fixed="top" bg="dark" variant="dark">
+        <Navbar.Brand href="#home">Mentor Connector</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#features">My Profile</Nav.Link>
+          <Nav.Link href="#pricing">Inbox</Nav.Link>
+        </Nav>
+        <Form inline>
+          <Button variant="outline-danger">Log Out</Button>
+        </Form>
+    </Navbar>
+
+    );
+  }
+}
+
+export default Header;
+
+/*
     <div>
 
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -33,25 +52,20 @@ class Header extends Component {
               <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">Log Out</button>
             </form>
 
-            {/* FUTURE FEATURE
+            //FUTURE FEATURE
             <form className="form-inline mt-2 mt-md-0">
               <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"></input>
               <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            */}
-          </div>
-        </nav>
+            
+            </div>
+            </nav>
+    
+        </div>
+
+*/
 
 
-
-      
-    </div>
-
-    );
-  }
-}
-
-export default Header;
 
 /*
 <!-- Bootstrap core JavaScript

@@ -35,7 +35,7 @@ class Landing extends Component {
           onHide={closeReg}
     />
     <SignIn
-          show={this.state.registerview}
+          show={this.state.signinview}
           onHide={closeLog}
     />
   </main>
