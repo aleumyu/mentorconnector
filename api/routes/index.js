@@ -18,16 +18,14 @@ router.get('/api/v1/users/:id', (req, res, next) => {
     })
 });
 
-// http://localhost:9000/api/v1/user?role=${roleParam}&industry=${industryParam}&meeting=${meetingParam}&interests=${interestsParam}&location=${locationParam}`
-
 router.get('/api/v1/users/', function (req, res, next) {
   let industryParam = req.query.industry;
   let locationParam = req.query.location;
   let roleParam = req.query.role;
   let meetingParam = req.query.meeting;
-  let interestsParam = req.query.interest;
+  let interestsParam = req.query.interestTag;
 
-  if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
+  if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {   //this works
     db('SELECT * FROM user ORDER BY userId ASC;')
       .then(results => {
         if (results.error) {
@@ -36,8 +34,8 @@ router.get('/api/v1/users/', function (req, res, next) {
         console.log('results: ' + JSON.stringify(results.data));
         res.send(results.data);
       })
-  } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {
-    db(`SELECT u.userId, industry, location, role, meeting, firstName FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)
+  } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {   //this works
+    db(`SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)
       .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
@@ -46,17 +44,17 @@ router.get('/api/v1/users/', function (req, res, next) {
         res.send(results.data);
       })
   } else { 
-    let baseQuery = "SELECT u.userId, industry, location, role, meeting, firstName FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
+    let baseQuery = "SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
     let fullQuery = baseQuery;
     let containOtherQuery = false;
 
     if (roleParam) {
-      roleParam = locParam.split(',').map( e => `u.role="${e}" OR u.role="2"`).join(' OR ');
+      roleParam = roleParam.split(',').map( e => `u.role="${e}"`).join(' OR ');
       fullQuery += `${roleParam}`;
       containOtherQuery = true;
     }
     if (meetingParam) {
-      meetingParam = meetingParam.split(',').map( e => `u.meeting="${e}" OR u.meeting="2"`).join(' OR ');
+      meetingParam = meetingParam.split(',').map( e => `u.meeting="${e}"`).join(' OR ');  //add OR for meeting type?
       if (containOtherQuery) {
         fullQuery += `AND ${meetingParam}`;
       } else {
@@ -65,7 +63,7 @@ router.get('/api/v1/users/', function (req, res, next) {
       }
     }
     if (interestsParam) {
-      interestsParam = interestsParam.split(',').map( e => `u.interests="${e}"`).join(' OR ');
+      interestsParam = interestsParam.split(',').map( e => `i.interestTag="${e}"`).join(' OR ');
       if (containOtherQuery) {
         fullQuery += `AND ${interestsParam}`;
       } else {
@@ -83,7 +81,7 @@ router.get('/api/v1/users/', function (req, res, next) {
       }
     }
     if (locationParam) {
-      locationParam = locationParam.split(',').map( e => `u.role="${e}" OR u.location="2"`).join(' OR ');
+      locationParam = locationParam.split(',').map( e => `u.role="${e}"`).join(' OR ');
       if (containOtherQuery) {
         fullQuery += `AND ${locationParam}`;
       } else {

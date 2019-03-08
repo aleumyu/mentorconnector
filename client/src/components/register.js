@@ -7,16 +7,19 @@ class Register extends Component {
     super(props);
   }
 
+
+  addAccount(e) {}
+
   render() {
     return (
       <Modal
         {...this.props}
         size="lg"
-        aria-labelledby="contained-modal"
+        aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal">
+          <Modal.Title id="contained-modal-title-vcenter">
             Register with MentorConnect
           </Modal.Title>
         </Modal.Header>
@@ -31,7 +34,7 @@ class Register extends Component {
 						</label>
 						<div className="clear"> </div>
 					</div>
-					<input type="submit" value="SIGNUP" />
+					<input type="submit" value="SIGNUP" onClick={(e) => this.addAccount(e)} />
 				<p>Don't have an Account? <a href="#"> Login Now!</a></p>
 
         </Modal.Body>

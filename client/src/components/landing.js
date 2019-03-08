@@ -4,8 +4,6 @@ import Register from "./register";
 import SignIn from "./signin";
 import 'bootstrap/dist/css/bootstrap.css'
 
-
-
 class Landing extends Component {
 
   constructor(props) {
