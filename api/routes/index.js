@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 
+
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
   db(`SELECT f.userId, photo, industry, jobType, location, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)

@@ -1,0 +1,51 @@
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+  margin: 15px;
+}
+
+/* Base structure */
+
+html,
+body {
+  height: 100%;
+  background-color:white;
+}
+
+body {
+  background: url(images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.cover-container {
+  max-width: 42em;
+}
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+  margin-top: 40%;
+  color:green;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 600;
+}

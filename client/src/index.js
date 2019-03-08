@@ -6,6 +6,7 @@ import Landing from './components/landing';
 import Home from './components/home';
 import Results from './components/results';
 import Profile from './components/profile';
+import 'bootstrap';
 
 const routing = (
     <Router>
@@ -18,9 +19,4 @@ const routing = (
     </Router>
   )
 
-
-
-
 ReactDOM.render(routing, document.getElementById('root'));
-
-
