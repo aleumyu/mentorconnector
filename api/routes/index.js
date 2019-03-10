@@ -7,12 +7,28 @@ router.get('/', function(req, res, next) {
   res.send({ response: 'Express reponse' });
 });
 
+router.get('/api/v1/users/:id', (req, res, next) => {
+  db(`SELECT u.userId, photo, industry, jobType, years, intro, location, role, meeting, firstName, lastName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.userId=${req.params.id};`)
+    .then(results => {
+      if (results.error) {
+        res.status(500).send(results.error);
+      }
+      console.log('results: ' + JSON.stringify(results.data));
+      res.send(results.data);
+    })
+});
+
+
+
+
+
 router.get('/api/v1/users/', function (req, res, next) {
   let industryParam = req.query.industry;
   let locationParam = req.query.location;
   let roleParam = req.query.role;
   let meetingParam = req.query.meeting;
   let interestsParam = req.query.interestTag;
+  
 
   if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
     db('SELECT * FROM user ORDER BY userId ASC;')
@@ -24,8 +40,8 @@ router.get('/api/v1/users/', function (req, res, next) {
         res.send(results.data);
       })
   } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {
-    db(`SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)
-      .then(results => {
+    db(`SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)  
+    .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
         }
