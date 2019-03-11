@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/api/v1/users/:id', (req, res, next) => {
-  db(`SELECT u.userId, photo, industry, jobType, years, intro, location, role, meeting, firstName, lastName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.userId=${req.params.id};`)
+  db(`SELECT * FROM user WHERE userId=${req.params.id};`)
     .then(results => {
       if (results.error) {
         res.status(500).send(results.error);
@@ -18,6 +18,18 @@ router.get('/api/v1/users/:id', (req, res, next) => {
     })
 });
 
+router.get('/api/v1/users/:id/interests', (req, res, next) => {
+  db(`SELECT * FROM interests WHERE userId=${req.params.id};`)
+    .then(results => {
+      if (results.error) {
+        res.status(500).send(results.error);
+      }
+      console.log('results: ' + JSON.stringify(results.data));
+      res.send(results.data);
+    })
+});
+
+//`SELECT u.userId, photo, industry, jobType, years, intro, location, role, meeting, firstName, lastName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.userId=${req.params.id};
 
 
 
