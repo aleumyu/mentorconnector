@@ -40,9 +40,10 @@ class Profile extends Component {
   } 
 
   removeFavoite(event, i) {
+    event.preventDefault(event);
     const {id} = this.props.match.params;
     console.log(this.state.favoritesList[i]);
-    event.preventDefault();
+    
     fetch(`http://localhost:9000/api/v1/users/${id}/favorites/${this.state.favoritesList[i].selectedUserId}`, {
       method: 'DELETE'
     })
@@ -87,7 +88,7 @@ class Profile extends Component {
                           }
 
                           <p>{e.years} year</p>
-                          <p>{e.indusrty}</p>
+                          <p>{e.industry}</p>
                           {this.state.interestTag.map( e => {
                             return <p key={e.interestId}>{e.interestTag}</p>
 
