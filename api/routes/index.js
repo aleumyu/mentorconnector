@@ -40,7 +40,8 @@ router.get('/api/v1/users/', function (req, res, next) {
   let roleParam = req.query.role;
   let meetingParam = req.query.meeting;
   let interestsParam = req.query.interestTag;
-  
+  console.log('hello1')
+
 
   if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
     db('SELECT * FROM user ORDER BY userId ASC;')
@@ -49,8 +50,10 @@ router.get('/api/v1/users/', function (req, res, next) {
           res.status(500).send(results.error);
         }
         console.log('results: ' + JSON.stringify(results.data));
+        console.log('hello2')
         res.send(results.data);
       })
+      
   } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {
     db(`SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)  
     .then(results => {
@@ -58,12 +61,15 @@ router.get('/api/v1/users/', function (req, res, next) {
           res.status(500).send(results.error);
         }
         console.log('results: ' + JSON.stringify(results.data));
+        console.log('hello3')
         res.send(results.data);
       })
+      
   } else { 
     let baseQuery = "SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
     let fullQuery = baseQuery;
     let containOtherQuery = false;
+    console.log('hello4')
 
     if (roleParam) {
       roleParam = roleParam.split(',').map( e => `u.role="${e}"`).join(' OR ');
@@ -106,6 +112,7 @@ router.get('/api/v1/users/', function (req, res, next) {
         containOtherQuery = true;
       }
     }   
+    console.log('hello5')
   } 
 }); 
 

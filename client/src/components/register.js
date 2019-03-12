@@ -35,7 +35,7 @@ class Register extends Component {
 						<div className="clear"> </div>
 					</div>
 					<input type="submit" value="SIGNUP" onClick={(e) => this.addAccount(e)} />
-				<p>Don't have an Account? <a href="#"> Login Now!</a></p>
+				<p>Already have an Account? <a href="#"> Login Now!</a></p>
 
         </Modal.Body>
         <Modal.Footer>

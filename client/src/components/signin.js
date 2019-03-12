@@ -19,23 +19,17 @@ class SignIn extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Sign In MentorConnect
+            Sign In to MentorConnect
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
           <input className="text email" type="email" name="email" placeholder="Email" required="" />
 					<input className="text" type="password" name="password" placeholder="Password" required="" />
-					<input className="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="" />
 					<div className="wthree-text">
-						<label className="anim">
-							<input type="checkbox" className="checkbox" required="" />
-							<span>I Agree To The Terms and Conditions</span>
-						</label>
 						<div className="clear"> </div>
 					</div>
-					<input type="submit" value="SIGNUP" />
-				<p>Don't have an Account? <a href="#"> Login Now!</a></p>
+					<input type="submit" value="SIGN IN" />
+				<p>Don't have an Account? <a href="#"> Register Now!</a></p>
 
         </Modal.Body>
         <Modal.Footer>
