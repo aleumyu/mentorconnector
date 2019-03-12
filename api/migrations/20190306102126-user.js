@@ -35,6 +35,7 @@ exports.up = function(db, callback) {
   db.runSql('INSERT INTO favorites (userId, selectedUserId) VALUES (5, 1)', [], function() {});
   db.runSql('INSERT INTO favorites (userId, selectedUserId) VALUES (5, 2)', [], function() {});
   db.runSql('INSERT INTO favorites (userId, selectedUserId) VALUES (5, 3)', [], function() {});  
+  db.runSql('INSERT INTO interests (userId, interestTag) VALUES (1, "job"), (1, "cv"), (1, "salary"), (2, "business"), (2, "job"), (3, "salary"), (4, "balance"), (4, "cv"), (5, "business")', [], function() {});  
   callback();
 };
 
