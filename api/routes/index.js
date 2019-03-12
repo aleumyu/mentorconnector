@@ -88,20 +88,6 @@ router.get('/api/v1/users/', function (req, res, next) {
   } 
 }); 
 
-
-router.get('/api/v1/users/:id', function(req, res, next) {
-  
-  db('SELECT * FROM user WHERE user.userId =' + `${req.params.id}`)
-    .then(results => {
-      if (results.error) {
-        console.log('as');
-        res.status(500).send(results.error);
-      }
-      console.log('results: ' + JSON.stringify(results.data));
-      res.send(results.data);
-    })
-});
-
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
   db(`SELECT f.userId, photo, industry, jobType, location, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
