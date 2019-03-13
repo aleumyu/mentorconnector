@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var db = require("../model/helper");
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -149,6 +151,18 @@ router.delete('/api/v1/users/:id1/favorites/:id2', function(req, res, next) {
     res.send(results.data);
   })
 
+});
+
+router.post('/api/v1/register', function(req, res, next) {
+  bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+    db(`INSERT INTO user (email, password) VALUES ("${req.body.email}", "${hash}");`)
+  })
+  .then(results => {
+    if (results.error) {
+      res.status(500).send(results.error);
+    }
+    res.send(results.data);
+  })
 });
 
 
