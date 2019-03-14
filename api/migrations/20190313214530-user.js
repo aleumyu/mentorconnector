@@ -21,7 +21,7 @@ exports.up = function(db, callback) {
   db.runSql('DROP TABLE favorites;', [], function() {});
   db.runSql('DROP TABLE message;', [], function() {});
   //create tables 
-  db.runSql('CREATE TABLE user (userId INT(11) NOT NULL AUTO_INCREMENT, email VARCHAR(100) NOT NULL, password VARCHAR(30) NOT NULL, photo VARCHAR(200), industry VARCHAR(50), jobType VARCHAR(50), years TINYINT(1), intro TEXT, country VARCHAR(30), city VARCHAR(30), role TINYINT(1), meeting TINYINT(1), firstName VARCHAR(30), lastName VARCHAR(30), PRIMARY KEY (userId))', [], function() {});
+  db.runSql('CREATE TABLE user (userId INT(11) NOT NULL AUTO_INCREMENT, email VARCHAR(100) NOT NULL, password TEXT NOT NULL, photo VARCHAR(200), industry VARCHAR(50), jobType VARCHAR(50), years TINYINT(1), intro TEXT, country VARCHAR(30), city VARCHAR(30), role TINYINT(1), meeting TINYINT(1), firstName VARCHAR(30), lastName VARCHAR(30), PRIMARY KEY (userId))', [], function() {});
   db.runSql('CREATE TABLE interests (interestId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), interestTag VARCHAR(100), PRIMARY KEY (interestId))', [], function() {});
   db.runSql('CREATE TABLE favorites (favoriteId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), selectedUserId INT(11), PRIMARY KEY (favoriteId))', [], function() {});
   db.runSql('CREATE TABLE message (messageId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), receiverId INT (11), status BOOLEAN, message TEXT, date DATETIME, PRIMARY KEY (messageId))', [], function() {});
@@ -35,6 +35,8 @@ exports.up = function(db, callback) {
   db.runSql('INSERT INTO user (email, password, photo, industry, jobType, years, intro, country, city, role, meeting, firstName, lastName) VALUES ("katrina@gmail.com", "123459", "https://media.licdn.com/dms/image/C5603AQFcTm7xEarV6A/profile-displayphoto-shrink_800_800/0?e=1557964800&v=beta&t=ipLoeugYuwEGXIt7hs2xqcaBxKO6c4gPxDaZMkDDCzs", "Data Science", "CEO at Codely", 4, "wowwwwwwwww", "United States", "San Francisco", 0, 20, "Katrina", "Walker")', [], function() {});
   //add new rows into favorites
   db.runSql('INSERT INTO favorites (userId, interestTag) VALUES (1, 3), (1, 4), (1, 5), (2, 3), (2, 5), (3, 4), (4, 1), (4, 5), (5, 1), (5, 2), (5, 3)', [], function() {});
+  //authentication
+  db.runSql('ALTER TABLE user ADD UNIQUE (email)', [], function() {});
   callback();
 };   
 
