@@ -29,99 +29,94 @@ router.get('/api/v1/users/:id/interests', (req, res, next) => {
     })
 });
 
-//`SELECT u.userId, photo, industry, jobType, years, intro, location, role, meeting, firstName, lastName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.userId=${req.params.id};
-
-
-
-
 router.get('/api/v1/users/', function (req, res, next) {
-  let industryParam = req.query.industry;
-  let locationParam = req.query.location;
   let roleParam = req.query.role;
+  let industryParam = req.query.industry;
   let meetingParam = req.query.meeting;
   let interestsParam = req.query.interestTag;
-  console.log('hello1')
+  let countryParam = req.query.country;
+  let cityParam = req.query.city;
 
-
-  if (!interestsParam && !roleParam && !meetingParam && !industryParam && !locationParam) {
+  if (!interestsParam && !roleParam && !meetingParam && !industryParam && !countryParam && !cityParam) {
     db('SELECT * FROM user ORDER BY userId ASC;')
       .then(results => {
         if (results.error) {
           res.status(500).send(results.error);
         }
         console.log('results: ' + JSON.stringify(results.data));
-        console.log('hello2')
         res.send(results.data);
       })
-      
-  } else if (interestsParam && roleParam && meetingParam && industryParam && locationParam) {
-    db(`SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE u.industry="${industryParam}" AND u.location="${locationParam}" AND u.role=${roleParam} AND u.meeting=${meetingParam} AND i.interestTag="${interestsParam}";`)  
-    .then(results => {
-        if (results.error) {
-          res.status(500).send(results.error);
-        }
-        console.log('results: ' + JSON.stringify(results.data));
-        console.log('hello3')
-        res.send(results.data);
-      })
-      
+            
   } else { 
-    let baseQuery = "SELECT u.userId, u.industry, u.location, u.role, u.meeting, u.firstName, i.interestTag FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
-    let fullQuery = baseQuery;
+    let baseQuery = "SELECT DISTINCT u.userId, u.industry, u.jobType, u.country, u.city, u.role, u.firstName, u.lastName, u.photo FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
     let containOtherQuery = false;
-    console.log('hello4')
 
     if (roleParam) {
       roleParam = roleParam.split(',').map( e => `u.role="${e}"`).join(' OR ');
-      fullQuery += `${roleParam}`;
+      baseQuery += `${roleParam}`;
       containOtherQuery = true;
     }
-    if (meetingParam) {
-      meetingParam = meetingParam.split(',').map( e => `u.meeting="${e}"`).join(' OR ');  //add OR for meeting type?
+    if (industryParam) {
+      industryParam = industryParam.split(',').map( e => `u.industry="${e}"`).join(' OR ');
       if (containOtherQuery) {
-        fullQuery += `AND ${meetingParam}`;
+        baseQuery += `AND ${industryParam}`;
       } else {
-        fullQuery += `${meetingParam}`;
+        baseQuery += `${industryParam}`;
+        containOtherQuery = true;
+      }
+    }
+    if (meetingParam) {
+      meetingParam = meetingParam.split(',').map( e => `u.meeting="${e}"`).join(' OR ');
+      if (containOtherQuery) {
+        baseQuery += `AND ${meetingParam}`;
+      } else {
+        baseQuery += `${meetingParam}`;
         containOtherQuery = true;
       }
     }
     if (interestsParam) {
       interestsParam = interestsParam.split(',').map( e => `i.interestTag="${e}"`).join(' OR ');
       if (containOtherQuery) {
-        fullQuery += `AND ${interestsParam}`;
+        baseQuery += `AND ${interestsParam}`;
       } else {
-        fullQuery += `${interestsParam}`;
+        baseQuery += `${interestsParam}`;
         containOtherQuery = true;
       }
     }
-    if (industryParam) {
-      industryParam = industryParam.split(',').map( e => `u.industry="${e}"`).join(' OR ');
+    if (cityParam) {
+      cityParam = cityParam.split(',').map( e => `u.city="${e}"`).join(' OR ');
       if (containOtherQuery) {
-        fullQuery += `AND ${industryParam}`;
+        baseQuery += `AND ${cityParam}`;
       } else {
-        fullQuery += `${industryParam}`;
+        baseQuery += `${cityParam}`;
         containOtherQuery = true;
       }
     }
-    if (locationParam) {
-      locationParam = locationParam.split(',').map( e => `u.role="${e}"`).join(' OR ');
+    if (countryParam) {
+      countryParam = countryParam.split(',').map( e => `u.country="${e}"`).join(' OR ');
       if (containOtherQuery) {
-        fullQuery += `AND ${locationParam}`;
+        baseQuery += `AND ${countryParam}`;
       } else {
-        fullQuery += `${locationParam}`;
+        baseQuery += `${countryParam}`;
         containOtherQuery = true;
       }
-    }   
-    console.log('hello5')
+    }     
+    db(`${baseQuery};`)
+      .then(results => {
+        if (results.error) {
+          res.status(500).send(results.error);
+        }
+        console.log('results: ' + JSON.stringify(results.data));
+        res.send(results.data);
+      })
   } 
 }); 
 
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
-  db(`SELECT f.userId, photo, industry, jobType, location, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
+  db(`SELECT f.userId, photo, industry, jobType, country, city, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
     .then(results => {
       if (results.error) {
-        console.log('as');
         res.status(500).send(results.error);
       }
       console.log('results: ' + JSON.stringify(results.data));

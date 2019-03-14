@@ -25,10 +25,11 @@ DB_NAME=YOURDATABASE
     [password]
 - CREATE DATABASE mentorship;
 - USE mentorship;
-- CREATE TABLE user (userId INT(11) NOT NULL AUTO_INCREMENT, email VARCHAR(100) NOT NULL, password VARCHAR(30) NOT NULL, photo VARCHAR(200), industry VARCHAR(50), jobType VARCHAR(50), years TINYINT(1), intro TEXT, location VARCHAR(30), role TINYINT(1), meeting TINYINT(1), firstName VARCHAR(30), lastName VARCHAR(30), PRIMARY KEY (userId));
-- CREATE TABLE interests (interestId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), interestTag VARCHAR(100), PRIMARY KEY (interestId));
-- CREATE TABLE favorites (favoriteId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), selectedUserId INT(11), PRIMARY KEY (favoriteId));
-- CREATE TABLE message (messageId INT(11) NOT NULL AUTO_INCREMENT, userId INT(11), receiverId INT (11), status BOOLEAN, message TEXT, date DATETIME, PRIMARY KEY (messageId));
+
+## Add tables
+- Open terminal and navigate to the API folder. Enter the following text: 
+- yarn add db-migrate-mysql
+- 
 
 _This is a project that was created at [Codely](http://codely.tech), a full stack development bootcamp in Barcelona._
 
