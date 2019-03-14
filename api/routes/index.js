@@ -154,16 +154,28 @@ router.delete('/api/v1/users/:id1/favorites/:id2', function(req, res, next) {
 });
 
 router.post('/api/v1/register', function(req, res, next) {
-  bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-    db(`INSERT INTO user (email, password) VALUES ("${req.body.email}", "${hash}");`)
-  })
+  db(`SELECT email FROM user WHERE email="${req.body.email}"`)
   .then(results => {
-    if (results.error) {
-      res.status(500).send(results.error);
+    if (results.data[0] && results.data[0].email === req.body.email) {
+      return res.status(409).send(results.error);
+    } else {
+      bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+        db(`INSERT INTO user (email, password) VALUES ("${req.body.email}", "${hash}");`)
+        .then(results => {
+          if (results.error) {
+            res.status(500).send(results.error);
+          }
+          res.send(results.data);
+        })
+      })
     }
-    res.send(results.data);
-  })
-});
+  });
+
+});  
 
 
 module.exports = router;
+
+
+
+
