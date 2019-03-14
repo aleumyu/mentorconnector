@@ -47,7 +47,7 @@ router.get('/api/v1/users/', function (req, res, next) {
         }
         console.log('results: ' + JSON.stringify(results.data));
         res.send(results.data);
-      })
+      })   
             
   } else { 
     let baseQuery = "SELECT DISTINCT u.userId, u.industry, u.jobType, u.country, u.city, u.role, u.firstName, u.lastName, u.photo FROM user u INNER JOIN interests i ON u.userId=i.userId WHERE ";
