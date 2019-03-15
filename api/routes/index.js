@@ -114,6 +114,20 @@ router.get('/api/v1/users/', function (req, res, next) {
   } 
 }); 
 
+router.post('/api/v1/users/:id', function(req, res, next) {
+  db(`INSERT INTO user (photo, industry, jobType, years, intro, country, city, role, meeting, firstName, lastName) VALUES ("${req.body.photo}", "${req.body.industry}", "${req.body.jobType}", "${req.body.years}", "${req.body.intro}", "${req.body.country}", "${req.body.city}", ${req.body.role}, ${req.body.meeting}, "${req.body.firstName}", "${req.body.lastName}");`);
+  db(``)
+  .then(results => {
+    if (results.error) {
+      res.status(500).send(resutls.error);
+
+    }
+    res.send(results.data);
+  })
+});
+
+
+
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
   db(`SELECT f.userId, photo, industry, jobType, country, city, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
