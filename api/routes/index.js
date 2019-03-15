@@ -167,7 +167,7 @@ router.post('/api/v1/register', function(req, res, next) {
   });
 });  
 
-router.post('/api/v1/login', function(req, res, next) {
+router.post('/api/v1/signin', function(req, res, next) {
   db(`SELECT email, password FROM user WHERE email="${req.body.email}"`)
   .then(results => {
     if (results.data[0] && results.data[0].email !== req.body.email) {
@@ -175,10 +175,9 @@ router.post('/api/v1/login', function(req, res, next) {
       } else if (results.data[0] && results.data[0].email === req.body.email) {
         bcrypt.compare(req.body.password, results.data[0].password, function (err, result) {
           if (result == true) {
-            res.send('Success');
+            res.status(200).send("Successful");
           } else {
-           res.send('Incorrect password');
-           res.redirect('/');
+            res.status(500).send("Not successful");
           }
         });        
       };  
