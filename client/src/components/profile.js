@@ -30,6 +30,7 @@ class Profile extends Component {
       return Promise.all([results1.json(), results2.json(), results3.json()]);
     })
     .then(([json1, json2, json3]) => {
+      console.log(json2);
       this.setState ({
         user: json1,
         interestTag: json2,
