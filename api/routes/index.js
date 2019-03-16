@@ -114,8 +114,13 @@ router.get('/api/v1/users/', function (req, res, next) {
   } 
 }); 
 
+<<<<<<< Updated upstream
 router.get('/api/v1/users/:id/favorites', function(req, res, next) {
   
+=======
+
+router.get('/api/v1/users/:id/favorites', function(req, res, next) {  
+>>>>>>> Stashed changes
   db(`SELECT f.userId, photo, industry, jobType, country, city, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
     .then(results => {
       if (results.error) {
@@ -145,7 +150,6 @@ router.delete('/api/v1/users/:id1/favorites/:id2', function(req, res, next) {
     }
     res.send(results.data);
   })
-
 });
 
 router.post('/api/v1/register', function(req, res, next) {
@@ -164,7 +168,7 @@ router.post('/api/v1/register', function(req, res, next) {
         })
       })
     }
-  });
+  })
 });  
 
 router.post('/api/v1/signin', function(req, res, next) {
@@ -184,4 +188,29 @@ router.post('/api/v1/signin', function(req, res, next) {
   });
 });  
 
+router.put('/api/v1/users/', function(req, res, next) {
+
+  let baseQuery = `INSERT INTO interests (userId, interestTag) VALUES `
+  let insertValues = ""
+
+  for ( let i = 0; i < req.body.interestTag.length; i++ ) {
+    if ( i === req.body.interestTag.length - 1) {
+      insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[i]}");`
+    } else {
+      insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[i]}"), `
+    }
+  }
+
+  db(`UPDATE user SET photo="${req.body.photo}", industry="${req.body.industry}", jobType="${req.body.jobType}", years=${req.body.years}, intro="${req.body.intro}", country="${req.body.country}", city="${req.body.city}", role=${req.body.role}, meeting=${req.body.meeting}, firstName="${req.body.firstName}", lastName="${req.body.lastName}" WHERE email="${req.body.email}";`);
+  db(baseQuery + insertValues)
+  .then(results => {
+    if (results.error) {
+      res.status(500).send(resutls.error);
+    }
+    console.log('results: ' + JSON.stringify(results.data));
+    res.send(results.data);
+  })
+});
+
 module.exports = router;
+
