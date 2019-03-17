@@ -6,46 +6,91 @@ class RegisterForm extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      photo: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      jobType: "",
+      industry: "",
+      country: "",
+      city: "",
+      experience: 0,
+      role: 0,
+      meeting: 10,
+      interestCheckBox: [
+        {value: "Networking", isChecked: false},
+        {value: "Career Transition", isChecked: false},
+        {value: "Technical Skills", isChecked: false},
+        {value: "Leadership", isChecked: false},
+        {value: "Entrepreneurship", isChecked: false},
+        {value: "Job Search", isChecked: false},
+      ],
+    }
   }
-/*
 
-  updateInput = (event) => {
-    //handleChange
-    this.setState({
-      [event.target.name]: event.target.value,
+
+  updateInput(e) {
+    this.setState ({
+      [e.target.name]: e.target.value
     });
   }
 
+  updateSelect(e) {
+    this.setState ({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  updateCheckBox(event) {
+    let interestCheckBox = this.state.interestCheckBox;
+    interestCheckBox.forEach(e => {
+      if (e.value === event.target.value) {
+        e.isChecked = event.target.checked;
+      }
+    });
+
+    this.setState ({
+      interestCheckBox: interestCheckBox
+    });
+  }
+
+
   addUser(e) {
     e.preventDefault();
-    //handleSubmit
-    // add review to database
+    let interestCheckBox = this.state.interestCheckBox;
+    let interestTagArr = [];
+    interestCheckBox.forEach( e => {
+      if ( e.isChecked) {
+        interestTagArr.push(e.value);
+      }
+    })
+
     let newUser = {
-
-      //need to reference email to link this user to the one in the previous register screen
-      firstName: this.state.,
-      lastName: this.state.,
-      photo: 
-      industry: this.state.,
-      jobTitle: this.state.,
-      exoerience: this.state.,
-      intro: this.state.,
-      country: this.state.,
-      city: this.state.,
-      role: this.state.,
-      meeting: this.state.,
-
-      
+      email: this.state.email,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      photo: this.state.photo,
+      industry: this.state.industry,
+      jobType: this.state.jobType,
+      years: this.state.experience,
+      intro: this.state.intro,
+      country: this.state.country,
+      city: this.state.city,
+      role: this.state.role,
+      meeting: this.state.meeting,
+      interestTag: interestTagArr
     }
-
+    console.log(newUser);
     fetch("http://localhost:9000/api/v1/users", {
-      method: "POST", 
+      method: "PUT", 
       headers: {
           "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUser) 
+      body: JSON.stringify(newUser)  
     })
     .then (res => { 
+      console.log(res);
       if (!res.ok) {
         throw Error(res.statusText);
       }
@@ -55,8 +100,7 @@ class RegisterForm extends Component {
     });
   }
 
-  */
-
+  
 
   render() {
     return (
@@ -72,28 +116,28 @@ class RegisterForm extends Component {
         <ul>
         <li>
             <label>Upload a photo</label>
-            <input name="photo" type="text" placeholder="https://www..."/>
+            <input name="photo" type="text" placeholder="https://www..." onChange={e => this.updateInput(e)}/>
           </li>
 
           <li>
             <label>First Name(s)</label>
-            <input name="firstName" type="text" />
+            <input name="firstName" type="text" onChange={e => this.updateInput(e)}/>
           </li>
     
           <li>
             <label>Last Name(s)</label>
-            <input name="lastName" type="text" />
+            <input name="lastName" type="text" onChange={e => this.updateInput(e)}/>
           </li>
     
           <li>
             <label>Email Address ******</label>
-            <input name="email" type="text" />
+            <input name="email" type="text" onChange={e => this.updateInput(e)}/>
           </li>
     
           <li>
             <label>What country are you located in?</label>
-            <select name="country">
-              <option value="selected">Select …</option>
+            <select name="country" value={this.state.country} onChange = { e => this.updateSelect(e)}>
+              <option value="selected">Select</option>
               <option value="Afghanistan">Afghanistan (افغانستان)</option>
               <option value="Åland Islands">Åland Islands (Åland)</option>
               <option value="Albania">Albania (Shqipëria)</option>
@@ -357,12 +401,12 @@ class RegisterForm extends Component {
     
           <li>
             <label>What city are you located in?</label>
-            <input name="city" type="text" />
+            <input name="city" type="text" onChange={e => this.updateInput(e)}/>
           </li>
 
           <li>
             <label>What is your career path?</label>    
-            <select name="industry">
+            <select name="industry" value={this.state.industry} onChange = { e => this.updateSelect(e)}>
               <option value="Select">Select</option>
               <option value="Advertising">Advertising</option>
               <option value="Back-end development">Back-end development</option>
@@ -403,23 +447,23 @@ class RegisterForm extends Component {
 
           <li>
             <label>What is your job title?</label>
-            <input name="jobType" type="text" />
+            <input name="jobType" type="text" onChange={e => this.updateInput(e)}/>
           </li>
           
           <li>
             <label>What is your experience level?</label>
-            <select name="experience">
-              <option value="Early career (0-5 years)">Student / New graduate (0 years)</option>
-              <option value="Early career (0-5 years)">Early career (0-5 years)</option>
-              <option value="Mid level (6-10 years)">Mid level (6-10 years)</option>
-              <option value="Established (11+ years)">Established (11+ years)</option>
+            <select name="experience" value={this.state.experience} onChange = { e => this.updateSelect(e)}>
+              <option value="0">Student / New graduate (0 years)</option>
+              <option value="5">Early career (0-5 years)</option>
+              <option value="10">Mid level (6-10 years)</option>
+              <option value="1010">Established (11+ years)</option>
             </select>
             <p>How would you define your level of expertise in your career path?</p>
           </li>
     
           <li>
             <label>Would you like to be a mentor or mentee?</label>
-            <select name="role">
+            <select name="role" value={this.state.role} onChange = { e => this.updateSelect(e)}>
               <option value="0">Select</option>
               <option value="1">Mentor</option>
               <option value="2">Mentee</option>
@@ -429,11 +473,11 @@ class RegisterForm extends Component {
 
           <li>
             <label>How would you like to meet with your mentor/mentee?</label>
-            <select name="meeting">
+            <select name="meeting" value={this.state.meeting} onChange = { e => this.updateSelect(e)}>
               <option value="0">Select</option>
-              <option value="1">In person</option>
-              <option value="2">Virtually</option>
-              <option value="3">Both</option>
+              <option value="10">In person</option>
+              <option value="20">Virtually</option>
+              <option value="30">Both</option>
             </select>
           </li>
 
@@ -442,22 +486,22 @@ class RegisterForm extends Component {
             <label>How do you hope to benefit from this mentorship program?</label>
             <div className="form-group">
               <ul>
-                <li className="form-group"><input className="form-group" type="checkbox" value="Networking" /> Networking</li> <br />
-                <li className="form-group"><input className="form-group" type="checkbox" value="Career Transition" /> Career Transition</li> <br />
-                <li className="form-group"><input className="form-group" type="checkbox" value="Technical Skills" /> Technical Skills</li> <br />
-                <li className="form-group"><input className="form-group" type="checkbox" value="Leadership" /> Leadership</li> <br />
-                <li className="form-group"><input className="form-group" type="checkbox" value="Entrepreneurship" /> Entrepreneurship</li> <br />
-                <li className="form-group"><input className="form-group" type="checkbox" value="Networking" /> Job Search</li>  <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Networking" onChange={ e => this.updateCheckBox(e)}/> Networking</li> <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Career Transition" onChange={ e => this.updateCheckBox(e)}/> Career Transition</li> <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Technical Skills" onChange={ e => this.updateCheckBox(e)}/> Technical Skills</li> <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Leadership" onChange={ e => this.updateCheckBox(e)}/> Leadership</li> <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Entrepreneurship" onChange={ e => this.updateCheckBox(e)}/> Entrepreneurship</li> <br />
+                <li className="form-group"><input className="form-group" type="checkbox" value="Networking" onChange={ e => this.updateCheckBox(e)}/> Job Search</li>  <br />
               </ul>  
             </div>
           </li>
 
           <li>
             <label>Introduce yourself and what kind of match you are hoping to find.</label>
-            <textarea name="intro" cols="70" rows="10"></textarea>
+            <textarea name="intro" cols="70" rows="10" onChange={e => this.updateInput(e)}></textarea>
           </li>
 
-          <button value="Submit" id="submit" type="submit">Update my Profile</button>
+          <button value="Submit" id="submit" type="submit" onClick={e => this.addUser(e)}>Update my Profile</button>
         
     
         </ul>
