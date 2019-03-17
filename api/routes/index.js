@@ -114,13 +114,9 @@ router.get('/api/v1/users/', function (req, res, next) {
   } 
 }); 
 
-<<<<<<< Updated upstream
-router.get('/api/v1/users/:id/favorites', function(req, res, next) {
-  
-=======
 
-router.get('/api/v1/users/:id/favorites', function(req, res, next) {  
->>>>>>> Stashed changes
+router.get('/api/v1/users/:id/favorites', function(req, res, next) {
+
   db(`SELECT f.userId, photo, industry, jobType, country, city, firstName, lastName, f.selectedUserId FROM user u INNER JOIN favorites f ON u.userId=f.selectedUserId WHERE f.userId=${req.params.id};`)
     .then(results => {
       if (results.error) {
@@ -168,8 +164,10 @@ router.post('/api/v1/register', function(req, res, next) {
         })
       })
     }
-  })
+  });
 });  
+
+
 
 router.post('/api/v1/signin', function(req, res, next) {
   db(`SELECT email, password FROM user WHERE email="${req.body.email}"`)
