@@ -10,13 +10,16 @@ class Landing extends Component {
     super(props);
     this.state = ({
       registerview: false,
-      signinview: false
+      signinview: false,
+      isAuthenticated: false
     })
   }
 
   render() {
     let closeReg = () => this.setState({ registerview: false });
     let closeLog = () => this.setState({ signinview: false });
+    let switchToSignIn = () => this.setState({ registerview: false, signinview: true });
+    let switchToRegister = () => this.setState({ signinview: false, registerview: true });
 
     return (
       <div id="landingbackground">
@@ -33,10 +36,14 @@ class Landing extends Component {
     <Register
           show={this.state.registerview}
           onHide={closeReg}
+          onSwitch={switchToSignIn}
+          isAuthenticated={this.state.isAuthenticated}
     />
     <SignIn
           show={this.state.signinview}
           onHide={closeLog}
+          onSwitch={switchToRegister}
+          isAuthenticated={this.state.isAuthenticated}
     />
   </main>
 

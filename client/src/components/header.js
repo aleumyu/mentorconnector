@@ -1,24 +1,38 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Button, Form } from 'react-bootstrap';
-
-
-
+import { NavLink, Redirect } from 'react-router-dom';
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      isAuthenticated: true
+    }
+  }
 
-
+  signOut(e) {
+    this.setState ({
+      isAuthenticated: false
+    });
+    }
+  
 
   render() {
+
+    if (this.state.isAuthenticated === false) {
+      return <Redirect to="/" />
+  }
+
     return (
       <Navbar fixed="top" bg="dark" variant="dark">
         <Navbar.Brand href="#home">Mentor Connector</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">My Profile</Nav.Link>
-          <Nav.Link href="#pricing">Inbox</Nav.Link>
+          <NavLink to="/home">Home</NavLink>
+          <NavLink to="/profile">My Profile</NavLink> 
+          <NavLink to="/inbox">Inbox</NavLink>
         </Nav>
         <Form inline>
-          <Button variant="outline-danger">Log Out</Button>
+          <Button variant="outline-danger" onClick={(e) => this.signOut(e)}>Log Out</Button>
         </Form>
     </Navbar>
 

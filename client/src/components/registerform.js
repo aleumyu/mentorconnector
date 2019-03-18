@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import './registerform.css';
 
 
 class RegisterForm extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +26,7 @@ class RegisterForm extends Component {
         {value: "Entrepreneurship", isChecked: false},
         {value: "Job Search", isChecked: false},
       ],
+      formComplete: false
     }
   }
 
@@ -58,6 +59,9 @@ class RegisterForm extends Component {
 
   addUser(e) {
     e.preventDefault();
+    this.setState ({ 
+        formComplete: true
+    })
     let interestCheckBox = this.state.interestCheckBox;
     let interestTagArr = [];
     interestCheckBox.forEach( e => {
@@ -103,10 +107,14 @@ class RegisterForm extends Component {
   
 
   render() {
+
+    if (this.state.formComplete === true) {
+        return <Redirect to="/home" />
+    }
+
     return (
       <div className="App">
 
-      <title>Join the Women Techmakers program – Google</title>
       <h2>Register for MentorConnector</h2>
       <p>MentorConnector provides mentorship, community and networking for women in technology. We achieve this by matching mentors and mentee based on their career path and objectives.</p>
       <p>Filling out our membership form will ensure we're able to best match mentors and mentees.</p>

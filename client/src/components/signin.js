@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+
+
+
+
 
 class SignIn extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      signedIn: false,
+      isAuthenticated: false,
       email: "",
       password: ""
     };
@@ -35,7 +40,7 @@ class SignIn extends Component {
       if (res.status === 200) {
         console.log(200);
         this.setState ({
-          signedIn: true
+          isAuthenticated: true
         })
       } else if (!res.ok) {
           throw Error(res.statusText);
@@ -45,7 +50,13 @@ class SignIn extends Component {
   }
 
   render() {
+  
+    if (this.state.isAuthenticated === true) {
+        return <Redirect to="/home" />
+    }
+   
     return (
+
       <Modal
         {...this.props}
         size="lg"
@@ -64,13 +75,14 @@ class SignIn extends Component {
 						<div className="clear"> </div>
 					</div>
 					<input type="submit" value="SIGN IN" onClick={(e) => this.signIn(e)}/>
-				<p>Don't have an Account? <a href="#"> Register Now!</a></p>
+				<p>Don't have an Account? <button onClick={this.props.onSwitch}> Register Now!</button></p>
 
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
+
     );
   }
 }
