@@ -17,6 +17,9 @@ img {
     max-width: 300px;
 }
 
+.body {
+  padding-top: 70px;
+}
 
 li {
     list-style-type: none;

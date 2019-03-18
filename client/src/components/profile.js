@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './header';
 import Footer from './footer';
 import Favorites from './favorites';
+import { Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -12,7 +13,8 @@ class Profile extends Component {
     this.state = {
       user: [],
       interestTag: [],
-      favoritesList: []
+      favoritesList: [],
+      isAuthenticated: true
     };
   }
 
@@ -61,10 +63,14 @@ class Profile extends Component {
   }
 
   render() {
-   
-    return (
-      <div>
 
+    if (this.state.isAuthenticated === false) {
+      return <Redirect to="/" />
+    }
+
+    return (
+
+        <div>
         <div><Header/></div>
           <hr/>
           <hr/>
@@ -105,13 +111,8 @@ class Profile extends Component {
         {/*if {id}(can I use this in render??) === current logined id (how can I do this?), show Favorites */}  
         <div><Favorites favoritesList={this.state.favoritesList} removeFavoite={(e, i) => this.removeFavoite(e, i)}/></div>
       
-        
-      
-      
         <div><Footer/></div>
-
-
-      </div>
+        </div>
     );
   }
 }

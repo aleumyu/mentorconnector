@@ -11,7 +11,8 @@ class Register extends Component {
       email: '',
       password: '',
       lgShow: false,
-      message: false
+      message: false,
+      isAuthenticated: false,
     }
   }
 
@@ -22,7 +23,6 @@ class Register extends Component {
     })
 
   }
-
 
   addAccount(e) {
     let signUpBody = {
@@ -41,7 +41,8 @@ class Register extends Component {
       if (response.status === 200) {
         console.log(200);
         this.setState ({
-          lgShow: true
+          lgShow: true,
+          isAuthenticated: true
         })
       } else if (response.status === 409) {
         console.log(409)
@@ -87,9 +88,9 @@ class Register extends Component {
                       <span>I Agree To The Terms and Conditions</span>
                     </label>
                     <div className="clear"> </div>
-                  </div>
+                  </div>  
                   <input type="submit" value="SIGNUP" onClick={(e) => this.addAccount(e)} />
-                  <p>Already have an Account? <a href="#"> Login Now!</a></p>
+                  <p>Already have an Account? <button onClick={this.props.onSwitch}> Sign in Now!</button></p>
                   
                 </Modal.Body>
                 <Modal.Footer>

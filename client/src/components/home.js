@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import Header from './header';
 import Footer from './footer';
+import { Redirect } from 'react-router-dom';
+import Results from "./results";
 import { Jumbotron, Button } from 'react-bootstrap';
 
 class Home extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { 
+      mentorSelect: false,
+    }
   }
 
-
   render() {
+
+    if (this.props.isAuthenticated === false) {
+      return <Redirect to="/" />
+  }
+
     return (
       <div className="App">
-        
+        <div>
         <div><Header/></div>
         
         <section className="jumbotron text-center">
@@ -21,8 +30,7 @@ class Home extends Component {
             <h1 className="jumbotron-heading">Be engaged and help others!</h1>
             <p className="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
             <p>
-              <a href="#" className="btn btn-primary my-2">Mentors</a>
-              <a href="#" className="btn btn-secondary my-2">Mentees</a>
+              <a href="/results" className="btn btn-primary my-2" >Find Match</a>
             </p>
           </div>
         </section>
@@ -65,7 +73,7 @@ class Home extends Component {
               </div>
             </div>
 
-            <hr class="featurette-divider"></hr>
+            <hr className="featurette-divider"></hr>
 
             <div className="row featurette">
               <div className="col-md-7 order-md-2">
@@ -89,13 +97,15 @@ class Home extends Component {
               </div>
             </div>
 
-            <hr class="featurette-divider"/>
+            <hr className="featurette-divider"/>
         
             {/*<!-- /END THE FEATURETTES -->*/}
           
           </div>{/*<!-- /.container -->*/}
         </div>
         <div><Footer/></div>
+        </div>
+
       </div>
     );
   }

@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import Header from './header';
+import Footer from './footer';
+import { NavLink, Redirect } from 'react-router-dom';
 import './results.css';
 
 
 class Results extends Component {
-
   constructor(props) {
     super(props);
     this.state = { 
       users: [],
       checkBox: [
-        {name: "role", value: "1", isChecked: false},
-        {name: "role", value: "2", isChecked: false},
+        {name: "role", value: "1", isChecked: true},
+        {name: "role", value: "2", isChecked: true},
         {name: "interests", value: "Networking" , isChecked: false},
         {name: "interests", value: "Career Transition" , isChecked: false},
-        {name: "interests", value: "Technical Skills" , isChecked: false},
+        {name: "interests", value: "Technical Skills" , isChecked: true},
         {name: "interests", value: "Leadership" , isChecked: false},
         {name: "interests", value: "Entrepreneurship" , isChecked: false},
         {name: "interests", value: "Job Search" , isChecked: false},
@@ -26,7 +27,8 @@ class Results extends Component {
       meeting: "",
       industry: "",
       country: "",
-      city: ""
+      city: "",
+      isAuthenticated: true,
     };
   }
 
@@ -66,7 +68,6 @@ class Results extends Component {
       let interestsParam = "";
       let meet = [];
       let meetingParam = ""
-  
 
     checkBox.forEach( e => {
       if (e.name === "role" && e.isChecked) {
@@ -175,12 +176,22 @@ class Results extends Component {
     }
 
   render() {
-    return (
+
+    if (this.state.isAuthenticated === false) {
+        return <Redirect to="/" />
+    }
+
+    return  (
+
     <div className="App">
+
+      <div><Header/></div>
+
+      <div className = "body">
 
       <h3>Describe your perfect match</h3>
       <p>Not all fields need to be selected</p>
-      
+
       <label>Role</label>
         <li className="form-group"><input className="form-group" name="role" type="checkbox" value="1" onChange = {(e) => this.handleCheckboxFilter(e)}/>Mentor</li> <br />
         <li className="form-group"><input className="form-group" name="role" type="checkbox" value="2" onChange = {(e) => this.handleCheckboxFilter(e)}/>Mentee</li><br />
@@ -513,7 +524,7 @@ class Results extends Component {
                 <img src= {obj.photo} alt= "Photo of user" ></img>
               </div>
               <div className="col2">
-              <NavLink to={`/profile/${obj.userId}`}>{obj.firstName + " " + obj.lastName.charAt(0) + "."}</NavLink> <br />
+              <NavLink to={`/profile/${obj.userId}`}>{obj.firstName + " " + obj.lastName}</NavLink> <br />
                 {obj.industry + " - " + obj.jobType} <br />
                 {obj.city + ", " + obj.country}   <br /> 
               </div>
@@ -521,6 +532,8 @@ class Results extends Component {
           </div> 
           )}  
         </div>  
+        </div>
+        <div><Footer/></div>
     </div>  
     );
   }
