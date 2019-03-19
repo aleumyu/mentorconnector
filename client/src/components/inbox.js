@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 class Inbox extends Component {
-
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  // super(props);
+  // }
 
   componentDidMount() {
     this.callAPI();
@@ -19,11 +17,7 @@ class Inbox extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        Add your code!
-      </div>
-    );
+    return <div className="App">Add your code!</div>;
   }
 }
 
