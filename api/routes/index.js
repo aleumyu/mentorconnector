@@ -176,7 +176,7 @@ router.delete("/api/v1/users/:id1/favorites/:id2", function(req, res, next) {
   });
 });
 
-router.post("/api/v1/register", async function(req, res, next) {
+router.post("/api/v1/register", function(req, res, next) {
   db(`SELECT email FROM user WHERE email="${req.body.email}"`).then(results => {
     if (results.data[0] && results.data[0].email === req.body.email) {
       return res.status(409).send(results.error);
