@@ -11,12 +11,28 @@ class Home extends Component {
     super(props);
     this.state = { 
       mentorSelect: false,
+      isAuthenticated: true
     }
   }
 
+  /*componentDidMount() {
+    fetch("http://localhost:9000/login")
+    .then(res => {
+      console.log("hellohello" + res.status)
+      if (res.status === 401) {
+        this.setState ({
+          isAuthenticated: false
+        });
+      }  
+    })  
+    .catch(error => {
+      console.log(error)
+    })  
+  }  */
+  
   render() {
 
-    if (this.props.isAuthenticated === false) {
+    if (this.state.isAuthenticated === false) {
       return <Redirect to="/" />
   }
 

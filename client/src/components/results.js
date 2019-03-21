@@ -28,26 +28,29 @@ class Results extends Component {
       industry: "",
       country: "",
       city: "",
-      isAuthenticated: true,
+      isAuthenticated: true
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:9000/api/v1/users")
-    .then(res => {
-      if (!res.ok) {
-        throw Error(res.statusText);
-      }
-      return res.json();
-    })
-    .then(json => {
-      this.setState ({
-        users: json
-      });
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      fetch("/api/v1/users")
+      .then(res => {
+        if (res.status === 401) {
+          return this.setState ({
+            isAuthenticated: false
+          });
+        }
+        return res.json();
+      })
+      .then(json => {
+        console.log("JSON OBJECT" + json)
+        this.setState ({
+          users: json.flat()
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      }) 
   }  
 
     handleCheckboxFilter(event) {
@@ -82,7 +85,7 @@ class Results extends Component {
       } 
     });
 
-    fetch(`http://localhost:9000/api/v1/users?role=${roleParam}&industry=${this.state.industry}&meeting=${meetingParam}&interestTag=${interestsParam}&country=${this.state.country}&city=${this.state.city}`)
+    fetch(`/api/v1/users?role=${roleParam}&industry=${this.state.industry}&meeting=${meetingParam}&interestTag=${interestsParam}&country=${this.state.country}&city=${this.state.city}`)
         .then(results => {
           if (!results.ok) {
             throw Error(results.statusText);
@@ -106,7 +109,7 @@ class Results extends Component {
           [event.target.name]: event.target.value
         });         
 
-      fetch(`http://localhost:9000/api/v1/users?role=${this.state.role}&industry=${event.target.value}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${this.state.country}&city=${this.state.city}`)
+      fetch(`/api/v1/users?role=${this.state.role}&industry=${event.target.value}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${this.state.country}&city=${this.state.city}`)
       .then(results => {
         if (!results.ok) {
           throw Error(results.statusText);
@@ -131,7 +134,7 @@ class Results extends Component {
         [event.target.name]: event.target.value
       });         
 
-    fetch(`http://localhost:9000/api/v1/users?role=${this.state.role}&industry=${this.state.industry}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${event.target.value}&city=${this.state.city}`)
+    fetch(`/api/v1/users?role=${this.state.role}&industry=${this.state.industry}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${event.target.value}&city=${this.state.city}`)
     .then(results => {
       if (!results.ok) {
         throw Error(results.statusText);
@@ -156,7 +159,7 @@ class Results extends Component {
         [event.target.name]: event.target.value,
       });
 
-      fetch(`http://localhost:9000/api/v1/users?role=${this.state.role}&industry=${this.state.industry}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${this.state.country}&city=${event.target.value}`)
+      fetch(`/api/v1/users?role=${this.state.role}&industry=${this.state.industry}&meeting=${this.state.meeting}&interestTag=${this.state.interests}&country=${this.state.country}&city=${event.target.value}`)
       .then(results => {
         if (!results.ok) {
           throw Error(results.statusText);

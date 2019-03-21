@@ -30,6 +30,19 @@ class RegisterForm extends Component {
     }
   }
 
+  componentDidMount() {
+    fetch("/login")
+    .then(res => {
+      if (res.status === 401) {
+        this.setState ({
+          isAuthenticated: false
+        });
+      }  
+    })  
+    .catch(error => {
+      console.log(error)
+    })  
+  }
 
   updateInput(e) {
     this.setState ({
@@ -86,7 +99,7 @@ class RegisterForm extends Component {
       interestTag: interestTagArr
     }
     console.log(newUser);
-    fetch("http://localhost:9000/api/v1/users", {
+    fetch("/api/v1/users", {
       method: "PUT", 
       headers: {
           "Content-Type": "application/json",
@@ -108,8 +121,8 @@ class RegisterForm extends Component {
 
   render() {
 
-    if (this.state.formComplete === true) {
-        return <Redirect to="/home" />
+    if (this.state.isAuthenticated === false) {
+        return <Redirect to="/" />
     }
 
     return (
