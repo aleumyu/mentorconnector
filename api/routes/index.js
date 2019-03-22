@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 var db = require('../model/helper');
 var bcrypt = require('bcrypt');
@@ -291,35 +291,28 @@ router.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
-router.put('/api/v1/users/', function(req, res, next) {
-	let baseQuery = `INSERT INTO interests (userId, interestTag) VALUES `;
-	let insertValues = '';
+router.put("/api/v1/users/", function(req, res, next) {
+  let baseQuery = `INSERT INTO interests (userId, interestTag) VALUES `;
+  let insertValues = "";
 
-	for (let i = 0; i < req.body.interestTag.length; i++) {
-		if (i === req.body.interestTag.length - 1) {
-			insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[
-				i
-			]}");`;
-		} else {
-			insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[
-				i
-			]}"), `;
-		}
-	}
+  for (let i = 0; i < req.body.interestTag.length; i++) {
+    if (i === req.body.interestTag.length - 1) {
+      insertValues += `((SELECT userId FROM user WHERE userId="${req.body.userId}"), "${req.body.interestTag[i]}");`;
+    } else {
+      insertValues += `((SELECT userId FROM user WHERE userId="${req.body.userId}"), "${req.body.interestTag[i]}"), `;
+    }
+  }
 
-	db(
-		`UPDATE user SET photo="${req.body.photo}", industry="${req.body.industry}", jobType="${req.body
-			.jobType}", years=${req.body.years}, intro="${req.body.intro}", country="${req.body.country}", city="${req
-			.body.city}", role=${req.body.role}, meeting=${req.body.meeting}, firstName="${req.body
-			.firstName}", lastName="${req.body.lastName}" WHERE email="${req.body.email}";`
-	);
-	db(baseQuery + insertValues).then((results) => {
-		if (results.error) {
-			res.status(500).send(resutls.error);
-		}
-		console.log('results: ' + JSON.stringify(results.data));
-		res.send(results.data);
-	});
+  db(`UPDATE user SET photo="${req.body.photo}", industry="${req.body.industry}", jobType="${req.body.jobType}", years=${req.body.years}, intro="${req.body.intro}", country="${req.body.country}", city="${req.body.city}", role=${req.body.role}, meeting=${req.body.meeting}, firstName="${req.body.firstName}", lastName="${req.body.lastName}" WHERE userId="${req.body.userId}";`);
+  db(baseQuery + insertValues)
+  .then(results => {
+    if (results.error) {
+      res.status(500).send(results.error);
+    }
+    console.log("results: " + JSON.stringify(results.data));
+    res.send(results.data);
+  });
+  
 });
 
 module.exports = router;
