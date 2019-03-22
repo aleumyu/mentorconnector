@@ -14,36 +14,49 @@ class Profile extends Component {
       user: [],
       interestTag: [],
       favoritesList: [],
-      isAuthenticated: true
+      isAuthenticated: true,
+      userId: 0
     };
   }
 
   componentDidMount() {
-   
     const {id} = this.props.match.params;
-    Promise.all ([
-      fetch(`/api/v1/users/${id}`),
-      fetch(`/api/v1/users/${id}/interests`),
-      fetch(`/api/v1/users/${id}/favorites`)
-    ])
-    .then(([results1, results2, results3]) => {
-      if (results1.status === 401 || results2.status === 401 || results3.status === 401) {
-        return this.setState ({
-          isAuthenticated: false
-        });
+    fetch('/login') 
+    .then(res => {
+      if (!res.ok) {
+        throw Error(res.statusText);
       }
-      return Promise.all([results1.json(), results2.json(), results3.json()]);
+      console.log('res is ' + res);
+      return res.json();
     })
-    .then(([json1, json2, json3]) => {
-      console.log(json2);
+    .then(json => {
+      console.log(json);
       this.setState ({
-        user: json1,
-        interestTag: json2,
-        favoritesList: json3
+        userId: json[0].userId
       });
+      return Promise.all ([
+        fetch(`/api/v1/users/${id}`),
+        fetch(`/api/v1/users/${id}/interests`),
+        fetch(`/api/v1/users/${id}/favorites`)
+      ]);
     })
-    .catch(error => console.log(error))
-  
+      .then(([results1, results2, results3]) => {
+        if (results1.status === 401 || results2.status === 401 || results3.status === 401) {
+          return this.setState ({
+            isAuthenticated: false
+          });
+        }
+        return Promise.all([results1.json(), results2.json(), results3.json()]);
+      })
+      .then(([json1, json2, json3]) => {
+        console.log(json2);
+        this.setState ({
+          user: json1,
+          interestTag: json2,
+          favoritesList: json3
+        });
+      })
+      .catch(error => console.log(error))
   }
  
 
@@ -72,6 +85,8 @@ class Profile extends Component {
     if (this.state.isAuthenticated === false) {
       return <Redirect to="/" />
     }
+
+    const id = this.props.match.params.id;
 
     return (
 
@@ -113,8 +128,14 @@ class Profile extends Component {
               })
             }
           </div> 
-        {/*if {id}(can I use this in render??) === current logined id (how can I do this?), show Favorites */}  
-        <div><Favorites favoritesList={this.state.favoritesList} removeFavoite={(e, i) => this.removeFavoite(e, i)}/></div>
+          {console.log(id)}
+          {console.log(this.state.userId)}
+        {
+          
+          id === this.state.userId 
+          ? <div><Favorites favoritesList={this.state.favoritesList} removeFavoite={(e, i) => this.removeFavoite(e, i)}/></div>
+          : null
+        } 
       
         <div><Footer/></div>
         </div>
