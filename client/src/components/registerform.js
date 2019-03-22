@@ -29,6 +29,22 @@ class RegisterForm extends Component {
     };
   }
 
+
+  componentDidMount() {
+    fetch("/login")
+    .then(res => {
+      if (res.status === 401) {
+        this.setState ({
+          isAuthenticated: false
+        });
+      }  
+    })  
+    .catch(error => {
+      console.log(error)
+    })  
+  }
+
+
   updateInput(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -81,6 +97,7 @@ class RegisterForm extends Component {
       interestTag: interestTagArr
     };
     console.log(newUser);
+
     if (
       !newUser.firstName ||
       !newUser.lastName ||
@@ -96,33 +113,33 @@ class RegisterForm extends Component {
       this.setState({
         alert: true
       });
-    } else {
-      fetch("http://localhost:9000/api/v1/users", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newUser)
-      })
-        .then(res => {
-          console.log(res);
-          if (!res.ok) {
-            throw Error;
-          } else {
-            this.setState({
-              formComplete: true
-            });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    } else 
+    fetch("/api/v1/users", {
+      method: "PUT", 
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser)  
+    })
+    .then (res => { 
+      console.log(res);
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    });
+
   }
 
   render() {
+
     if (this.state.formComplete === true) {
       return <Redirect to="/home" />;
+    if (this.state.isAuthenticated === false) {
+        return <Redirect to="/" />
+
     }
 
     return (

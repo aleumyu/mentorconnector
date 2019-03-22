@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
-
-
-
-
 class SignIn extends Component {
 
   constructor(props) {
@@ -29,7 +25,7 @@ class SignIn extends Component {
       password: this.state.password 
     }
     console.log(signInBody)
-    fetch('http://localhost:9000/api/v1/signin', {
+    fetch('/api/v1/signin', {
       method: "POST", 
       headers: {
               "Content-Type": "application/json",

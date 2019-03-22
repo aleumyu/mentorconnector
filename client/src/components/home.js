@@ -6,15 +6,35 @@ import { Redirect } from "react-router-dom";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      mentorSelect: false
-    };
+
+    this.state = { 
+      mentorSelect: false,
+      isAuthenticated: true
+    }
   }
 
+  /*componentDidMount() {
+    fetch("http://localhost:9000/login")
+    .then(res => {
+      console.log("hellohello" + res.status)
+      if (res.status === 401) {
+        this.setState ({
+          isAuthenticated: false
+        });
+      }  
+    })  
+    .catch(error => {
+      console.log(error)
+    })  
+  }  */
+  
   render() {
-    if (this.props.isAuthenticated === false) {
-      return <Redirect to="/" />;
-    }
+
+
+    if (this.state.isAuthenticated === false) {
+      return <Redirect to="/" />
+  }
+
 
     return (
       <div className="App">

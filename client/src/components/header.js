@@ -11,10 +11,20 @@ class Header extends Component {
   }
 
   signOut(e) {
-    this.setState ({
-      isAuthenticated: false
-    });
-    }
+    fetch('/logout')
+    .then(results => {
+      if (!results.ok) {
+        throw Error(results.statusText);
+      } else {
+        this.setState ({
+          isAuthenticated: false
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })      
+  }
   
 
   render() {
@@ -28,7 +38,7 @@ class Header extends Component {
         <Navbar.Brand href="#home">Mentor Connector</Navbar.Brand>
         <Nav className="mr-auto">
           <NavLink to="/home">Home</NavLink>
-          <NavLink to="/profile">My Profile</NavLink> 
+          <NavLink to="/profile/:id">My Profile</NavLink> 
           <NavLink to="/inbox">Inbox</NavLink>
         </Nav>
         <Form inline>

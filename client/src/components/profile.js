@@ -19,15 +19,18 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+   
     const {id} = this.props.match.params;
     Promise.all ([
-      fetch(`http://localhost:9000/api/v1/users/${id}`),
-      fetch(`http://localhost:9000/api/v1/users/${id}/interests`),
-      fetch(`http://localhost:9000/api/v1/users/${id}/favorites`)
+      fetch(`/api/v1/users/${id}`),
+      fetch(`/api/v1/users/${id}/interests`),
+      fetch(`/api/v1/users/${id}/favorites`)
     ])
     .then(([results1, results2, results3]) => {
-      if (!results1.ok || !results2.ok || !results3.ok) {
-        throw Error(results1.statusText);
+      if (results1.status === 401 || results2.status === 401 || results3.status === 401) {
+        return this.setState ({
+          isAuthenticated: false
+        });
       }
       return Promise.all([results1.json(), results2.json(), results3.json()]);
     })
@@ -40,14 +43,16 @@ class Profile extends Component {
       });
     })
     .catch(error => console.log(error))
-  } 
+  
+  }
+ 
 
   removeFavoite(event, i) {
     event.preventDefault(event);
     const {id} = this.props.match.params;
     console.log(this.state.favoritesList[i]);
     
-    fetch(`http://localhost:9000/api/v1/users/${id}/favorites/${this.state.favoritesList[i].selectedUserId}`, {
+    fetch(`/api/v1/users/${id}/favorites/${this.state.favoritesList[i].selectedUserId}`, {
       method: 'DELETE'
     })
     .then (results => {
