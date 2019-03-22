@@ -21,7 +21,7 @@ class SignIn extends Component {
 
   signIn(e) {
     let signInBody = {
-      email: this.state.email,
+      email: this.state.email.toLowerCase(),
       password: this.state.password 
     }
     console.log(signInBody)

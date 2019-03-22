@@ -22,8 +22,8 @@ class Register extends Component {
 
 	addAccount(e) {
 		let signUpBody = {
-			email: this.state.email,
-			password: this.state.password
+			email: (this.state.email).toLowerCase(),
+			password: this.state.password	
 		};
 
 		fetch('/api/v1/register', {

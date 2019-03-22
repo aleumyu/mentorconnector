@@ -1,14 +1,39 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Button, Form } from 'react-bootstrap';
 import { NavLink, Redirect } from 'react-router-dom';
+//const LocalStrategy = require('passport-local').Strategy;
+
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      isAuthenticated: true
+      isAuthenticated: true,
+      userId: 0
     }
   }
+
+
+  componentDidMount() {
+    fetch('/login') 
+      .then(res => {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        console.log('res is ' + res);
+        return res.json();
+      })
+      .then(json => {
+        console.log(json);
+        this.setState ({
+          userId: json[0].userId
+        });
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
 
   signOut(e) {
     fetch('/logout')
@@ -38,7 +63,7 @@ class Header extends Component {
         <Navbar.Brand href="#home">Mentor Connector</Navbar.Brand>
         <Nav className="mr-auto">
           <NavLink to="/home">Home</NavLink>
-          <NavLink to="/profile/:id">My Profile</NavLink> 
+          <NavLink to={`/profile/${this.state.userId}`}>My Profile</NavLink>
           <NavLink to="/inbox">Inbox</NavLink>
         </Nav>
         <Form inline>
