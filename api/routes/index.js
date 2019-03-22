@@ -32,7 +32,8 @@ router.get('/api/v1/users/:id', ensureAuthenticated, (req, res, next) => {
   if (req.session.passport.user !== req.params.id) {
     // return error response
   }*/
-	db(`SELECT * FROM user WHERE userId=${req.params.id};`).then((results) => {
+  db(`SELECT * FROM user WHERE userId=${req.params.id};`)
+  .then((results) => {
 		if (results.error) {
 			res.status(500).send(results.error);
 		}
@@ -207,40 +208,21 @@ router.post('/api/v1/signin', function(req, res, next) {
 /*GET login */
 
 router.get('/login', ensureAuthenticated, function(req, res, next) {
-	res.status(200).send();
-	/*
+	
   console.log("GETLOGIN" + JSON.stringify(req.session.passport));
   console.log('GET login called');
  
-  if(req.session.passport) {
-    console.log("errorIF")
-    let success = null;
+  db(`SELECT userId FROM user WHERE userId=${req.session.passport.user}`)
+    .then((results) => {
+      if (results.error) {
+        res.status(500).send(results.error);
+      }
+      console.log('results: ' + JSON.stringify(results.data));
+      res.send(results.data);
+    });
 
-    db(`SELECT userId FROM user WHERE userId=${req.session.passport.user}`)
-      .then(user => {
-        if (user) {
-          console.log("user LOG" + user)
-          success = true;
-        }
-        console.log('whta is this?' + user);
-        console.log('success is ' + success);
-        if (success) {
-          console.log('successful');
-          res.status(200).send();
-        } else {
-          console.log("error1")
-          res.status(401).send();
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  } else {
-    console.log("error2")
-    res.status(401).send();
-	}
-	*/
 });
+
 
 	/*).then((results) => {
 		if (results.error) {
