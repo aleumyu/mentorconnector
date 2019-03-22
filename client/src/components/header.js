@@ -55,28 +55,6 @@ componentDidMount() {
     })
 }
 
-
-  componentDidMount() {
-    fetch('/login') 
-      .then(res => {
-        if (!res.ok) {
-          throw Error(res.statusText);
-        }
-        console.log('res is ' + res);
-        return res.json();
-      })
-      .then(json => {
-        console.log(json);
-        this.setState ({
-          userId: json[0].userId
-        });
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-
   signOut(e) {
     fetch('/logout')
     .then(results => {

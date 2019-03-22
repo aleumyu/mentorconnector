@@ -134,35 +134,7 @@ router.get('/api/v1/users/', ensureAuthenticated, function(req, res, next) {
 	}
 });
 
-router.put('/api/v1/users/', ensureAuthenticated, function(req, res, next) {
-	let baseQuery = `INSERT INTO interests (userId, interestTag) VALUES `;
-	let insertValues = '';
 
-	for (let i = 0; i < req.body.interestTag.length; i++) {
-		if (i === req.body.interestTag.length - 1) {
-			insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[
-				i
-			]}");`;
-		} else {
-			insertValues += `((SELECT userId FROM user WHERE email="${req.body.email}"), "${req.body.interestTag[
-				i
-			]}"), `;
-		}
-	}
-
-	db(
-		`UPDATE user SET photo="${req.body.photo}", industry="${req.body.industry}", jobType="${req.body
-			.jobType}", years=${req.body.years}, intro="${req.body.intro}", country="${req.body.country}", city="${req
-			.body.city}", role=${req.body.role}, meeting=${req.body.meeting}, firstName="${req.body
-			.firstName}", lastName="${req.body.lastName}" WHERE email="${req.body.email}";`
-	);
-	db(baseQuery + insertValues).then((results) => {
-		if (results.error) {
-			res.status(500).send(resutls.error);
-		}
-		res.send(results.data);
-	});
-});
 
 router.get('/api/v1/users/:id/favorites', ensureAuthenticated, function(req, res, next) {
 	db(
@@ -233,32 +205,33 @@ router.get('/login', ensureAuthenticated, function(req, res, next) {
 	});*/
 
 router.post('/api/v1/register', function(req, res, next) {
-	db(`SELECT email FROM user WHERE email="${req.body.email}"`).then((results) => {
+	db(`SELECT email FROM user WHERE email="${req.body.email}"`)
+	.then((results) => {
 		if (results.data[0] && results.data[0].email === req.body.email) {
 			return res.status(409).send(results.error);
 		} else {
 			bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-				db(`INSERT INTO user (email, password) VALUES ("${req.body.email}", "${hash}");`).then((results) => {
+				db(`INSERT INTO user (email, password) VALUES ("${req.body.email}", "${hash}");`)
+				.then((results) => {
 					if (results.error) {
 						res.status(500).send(results.error);
-          } else {
-
-					db(`SELECT userId FROM user WHERE email="${req.body.email}";`)
-						.then((results) => {
-							if (results.error) {
-                console.log('error');
-                throw err;
-							}
-							passport.authenticate('local', {
-								successRedirect: '/',
-								failureRedirect: '/'
-							})(req, res, next);
-						})
-						.catch((err) => console.log(err));
-					//console.log("results: " + JSON.stringify(results.data));
-          //console.log(results.data[0].insertId);
-          
-        }
+          			} else {
+						db(`SELECT userId FROM user WHERE email="${req.body.email}";`)
+							.then((results) => {
+								if (results.error) {
+									console.log('error');
+									throw err;
+								}
+								passport.authenticate('local', {
+									successRedirect: '/',
+									failureRedirect: '/'
+								})(req, res, next);
+							})
+							.catch((err) => console.log(err));
+						//console.log("results: " + JSON.stringify(results.data));
+						//console.log(results.data[0].insertId);
+			
+					}
 
 				});
 			});

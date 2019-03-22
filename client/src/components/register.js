@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import AlertMessage from './alertMessage';
-import RegisterForm from "./registerform";
+//import RegisterForm from "./registerform";
 import { Redirect } from 'react-router-dom';
 
 class Register extends Component {
@@ -35,29 +35,36 @@ class Register extends Component {
 			},
 			body: JSON.stringify(signUpBody)
 		})
-			.then((response) => {
-				if (response.status === 200) {
-          console.log(200);
-          this.setState ({
-            isAuthenticated: true
-          })
-          return response.json();
-				} else if (response.status === 409) {
-					console.log(409);
-					this.setState({
-						message: true
-					});
-				} else if (!response.ok) {
-					console.log('error');
-					throw Error(response.statusText);
+		.then((response) => {
+			if (!response.ok) {
+				console.log('error');
+				throw Error(response.statusText);
+			} else if (response.status === 409) {
+				console.log(409);
+				this.setState({
+					message: true
+				});
+			} else if (response.status === 200) {
+				console.log(200);
+				this.setState ({
+					isAuthenticated: true
+				})
+			}
+				return fetch('/login')
+		})
+			.then(res => {
+				console.log(res);
+				if (!res.ok) {
+				throw Error(res.statusText);
 				}
+				return res.json();
+			}) 
+			.then(json => {
+							console.log(json);
+							this.setState ({
+									userId: json[0].uderId
+							});
 			})
-      .then(json => {
-        console.log(json);
-        this.setState({
-          userId: json[0].userId
-        });
-      })
 			.catch((error) => console.log(error));
 	}
 
