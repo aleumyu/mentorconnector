@@ -137,9 +137,9 @@ class RegisterForm extends Component {
 
     if (this.state.formComplete === true) {
       return <Redirect to="/home" />;
+    }
     if (this.state.isAuthenticated === false) {
         return <Redirect to="/" />
-
     }
 
     return (
