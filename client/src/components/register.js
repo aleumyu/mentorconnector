@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import AlertMessage from './alertMessage';
+import RegisterForm from "./registerform";
 import { Redirect } from 'react-router-dom';
 
 class Register extends Component {
@@ -10,7 +11,8 @@ class Register extends Component {
 			email: '',
 			password: '',
       message: false,
-      isAuthenticated: false
+      isAuthenticated: false,
+      userId: 0
 		};
 	}
 
@@ -39,6 +41,7 @@ class Register extends Component {
           this.setState ({
             isAuthenticated: true
           })
+          return response.json();
 				} else if (response.status === 409) {
 					console.log(409);
 					this.setState({
@@ -49,6 +52,12 @@ class Register extends Component {
 					throw Error(response.statusText);
 				}
 			})
+      .then(json => {
+        console.log(json);
+        this.setState({
+          userId: json[0].userId
+        });
+      })
 			.catch((error) => console.log(error));
 	}
 
@@ -102,6 +111,7 @@ class Register extends Component {
 			</div>
 		);
 	}
+
 }
 
 export default Register;
