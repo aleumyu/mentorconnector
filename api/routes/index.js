@@ -150,9 +150,8 @@ router.get('/api/v1/users/:id/favorites', ensureAuthenticated, function(req, res
 });
 
 router.post('/api/v1/users/:id/favorites', ensureAuthenticated, function(req, res, next) {
-	db(
-		`INSERT INTO favorites (userId, selectedUserId) VALUES (${req.params.id}, ${req.body.selectedUserId});`
-	).then((results) => {
+	db(`INSERT INTO favorites (userId, selectedUserId) VALUES (${req.params.id}, ${req.body.selectedUserId});`)
+	.then((results) => {
 		if (results.error) {
 			res.status(500).send(resutls.error);
 		}

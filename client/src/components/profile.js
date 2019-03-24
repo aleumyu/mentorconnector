@@ -59,8 +59,36 @@ class Profile extends Component {
       .catch(error => console.log(error))
   }
  
+  addFavorite(e) {
+    const {id} = this.props.match.params;
+    let favorite = {
+      id: this.state.userId,
+      selectedUserId: id
+    }
+    console.log(favorite);
 
-  removeFavoite(event, i) {
+    fetch(`/api/v1/users/${this.state.userId}/favorites`, {
+      method: "POST", 
+      headers: {
+              "Content-Type": "application/json",
+      },
+      body: JSON.stringify(favorite) 
+    })
+    .then (res => {
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      const currentList = this.state.favoritesList;
+      this.setState ({
+        favoritesList: [...currentList, favorite]
+      });
+      console.log(this.state.favoritesList)
+    })
+    .catch (error => console.log(error))
+  
+  }
+
+  removeFavorite(event, i) {
     event.preventDefault(event);
     const {id} = this.props.match.params;
     console.log(this.state.favoritesList[i]);
@@ -87,58 +115,64 @@ class Profile extends Component {
     }
 
     const id = this.props.match.params.id;
+    console.log(id);
+    console.log(this.state.userId)
 
     return (
 
-        <div>
+      <div>
         <div><Header/></div>
           <hr/>
           <hr/>
           <hr/>
           <hr/>
-          <div className="text-center bg-white">      
-            {
-              this.state.user.map((e, i) => {
-                return <div className="container" key={e.userId}>
-                          <img src={e.photo}></img>
-                          <p>{e.firstName} {e.lastName}</p>
-                          <p>{e.jobType}</p>
-                          <p>{e.location}</p>
-                          <p>{e.intro}</p>
-                          <p>{e.meeting ? 'in person' : 'online'}</p>
-                          
-                          {
-                          (e.role === 0) ? <p>{'mentor'}</p>
-                          : (e.role === 1) ? <p>{'mentee'}</p>  
-                          : (e.role === 2) ? <p>{'mentor' + 'mentee'}</p>
-                          : <p></p>
-                          }
-
-                          <p>{e.years} year</p>
-                          <p>{e.industry}</p>
-                          {this.state.interestTag.map( e => {
-                            return <p key={e.interestId}>{e.interestTag}</p>
-
-
-                          })
+          <div className="container text-center">
+            <div className="container text-center bg-white align-items-center align-content-center">      
+              {
+                this.state.user.map((e, i) => {
+                  return <div className="container border border-secondary rounded text-center bg-white align-items-center align-content-center mb-5" key={e.userId}>
                         
+                            <img className="mb-3 mt-3" src={e.photo}></img><br></br>
                         
-                        }                       
-                      </div>
-              })
-            }
-          </div> 
-          {console.log(id)}
-          {console.log(this.state.userId)}
-        {
+                            <h4 className="d-inline text-uppercase font-weight-bold">{e.firstName} {e.lastName}</h4><span className="d-inline"> in {e.country} / {e.city}</span><br></br>
           
-          id === this.state.userId 
-          ? <div><Favorites favoritesList={this.state.favoritesList} removeFavoite={(e, i) => this.removeFavoite(e, i)}/></div>
-          : null
-        } 
-      
-        <div><Footer/></div>
+                            <p className="badge badge-warning mr-1">{e.meeting ? 'in person' : 'online'}</p>
+                            {
+                            (e.role === 0) ? <p className="badge badge-success mr-1">{'mentor'}</p>
+                            : (e.role === 1) ? <p className="badge badge-success mr-1">{'mentee'}</p>  
+                            : (e.role === 2) ? <p className="badge badge-success mr-1">{'mentor & ' + 'mentee'}</p>
+                            : <p></p>
+                            }
+                            {this.state.interestTag.map( e => {
+                              return <p className="badge badge-info rounded mr-1"key={e.interestId}>{e.interestTag}</p>
+                            })
+                            } 
+                            <p className="mb-2">{e.industry}</p>
+                            <p className="mb-2">{e.jobType}</p>
+                            <p className="mb-2">{e.years} year's of experience</p>
+                            <p>{e.intro}</p>                                    
+                        </div>
+                })
+              }
+          </div> 
+
+          {
+            id == this.state.userId
+            ? <p></p>
+            : <button className="btn btn-outline-success text-center" onClick={event => this.addFavorite(event)}>Add to Favorites</button>
+          }
+
         </div>
+
+        {
+          id == this.state.userId
+          ? <div>
+              <Favorites favoritesList={this.state.favoritesList} removeFavorite={(e, i) => this.removeFavorite(e, i)} userId={this.state.userId}/>
+            </div>
+          : <div></div>
+        }
+           <div><Footer/></div>
+      </div>
     );
   }
 }

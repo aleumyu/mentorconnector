@@ -12,29 +12,7 @@ class Header extends Component {
       userId: 0
     }
   }
-/*
-  componentDidMount() {
-    fetch('/login')
-    .then(res => {
-      if (res.status === 401) {
-        return this.setState ({
-          isAuthenticated: false
-        });
-      }
-      console.log('RES is ' + res);
-      return res.json();
-    })
-    .then(json => {
-      console.log("JSON is " + json);
-      this.setState ({
-        userId: json.userId
-      });
-    })
-    .catch(error => {
-      console.log(error)
-    }) 
-}  
-*/
+
 componentDidMount() {
   fetch('/login') 
     .then(res => {
@@ -77,6 +55,8 @@ componentDidMount() {
     if (this.state.isAuthenticated === false) {
       return <Redirect to="/" />
   }
+
+    console.log('head ' + this.state.userId);
 
     return (
       <Navbar fixed="top" bg="dark" variant="dark">
