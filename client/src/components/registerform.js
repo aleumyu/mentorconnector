@@ -25,7 +25,8 @@ class RegisterForm extends Component {
         { value: "Job Search", isChecked: false }
       ],
       formComplete: false,
-      alert: false
+      alert: false,
+      userId: 0
     };
   }
 
@@ -37,8 +38,14 @@ class RegisterForm extends Component {
         this.setState ({
           isAuthenticated: false
         });
-      }  
+      }
+      return res.json();  
     })  
+    .then(json => {
+      this.setState ({
+        userId: json[0].userId
+      })
+    })
     .catch(error => {
       console.log(error)
     })  
@@ -82,7 +89,7 @@ class RegisterForm extends Component {
     });
     
     let newUser = {
-      userId: this.props.userId,
+      userId: this.state.userId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       photo: this.state.photo,
@@ -125,6 +132,10 @@ class RegisterForm extends Component {
       console.log(res);
       if (!res.ok) {
         throw Error(res.statusText);
+      } else {
+        this.setState ({
+          formComplete: true
+        })
       }
     })
     .catch(error => {
