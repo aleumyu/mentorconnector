@@ -15,7 +15,7 @@ class Footer extends Component {
 
           <footer className="footer">
             <div className="container">
-              <span className="text-muted">Place sticky footer content here.</span>
+              <span className="text-muted">Project by Aleum Yang Urfels and Hana Drdla</span>
             </div>
           </footer>
 

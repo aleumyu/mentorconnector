@@ -194,7 +194,8 @@ class Results extends Component {
 
       <h3>Describe your perfect match</h3>
       <p>Not all fields need to be selected</p>
-
+<div className="row">
+      <div className="col-3">
       <label>Role</label>
         <li className="form-group"><input className="form-group" name="role" type="checkbox" value="1" onChange = {(e) => this.handleCheckboxFilter(e)}/>Mentor</li> <br />
         <li className="form-group"><input className="form-group" name="role" type="checkbox" value="2" onChange = {(e) => this.handleCheckboxFilter(e)}/>Mentee</li><br />
@@ -236,11 +237,11 @@ class Results extends Component {
         <option value="Quality assurance">Quality assurance</option>
         <option value="Other">Other</option>
         </select>
+      </div>
 
-      <label>Meeting</label>
-      <li className="form-group"><input className="form-group" type="checkbox" name="meeting" value="10" onChange = {(e) => this.handleCheckboxFilter(e)}/>In Person</li><br />
-      <li className="form-group"><input className="form-group" type="checkbox" name="meeting" value="20" onChange = {(e) => this.handleCheckboxFilter(e)}/>Virtually</li>
-     
+
+
+      <div className="col-3">
       <label>Interests</label>
             <div className="form-group">
               <li className="form-group"><input className="form-group" type="checkbox" name="interests" value="Networking" onChange = {(e) => this.handleCheckboxFilter(e)} /> Networking</li> <br />
@@ -250,7 +251,14 @@ class Results extends Component {
               <li className="form-group"><input className="form-group" type="checkbox" name="interests" value="Entrepreneurship" onChange = {(e) => this.handleCheckboxFilter(e)} /> Entrepreneurship</li> <br />
               <li className="form-group"><input className="form-group" type="checkbox" name="interests" value="Networking" onChange = {(e) => this.handleCheckboxFilter(e)} /> Job Search</li>  <br />
             </div>
-
+      </div>
+      
+      <div className="col-3">
+      <label>Meeting</label>
+      <li className="form-group"><input className="form-group" type="checkbox" name="meeting" value="10" onChange = {(e) => this.handleCheckboxFilter(e)}/>In Person</li><br />
+      <li className="form-group"><input className="form-group" type="checkbox" name="meeting" value="20" onChange = {(e) => this.handleCheckboxFilter(e)}/>Virtually</li>
+      
+      
       <label>Country</label>
       <select name="country" value={this.state.industry} onChange= {(e) =>{this.handleCountryFilter(e)}}>
       <option value="selected">Select …</option>
@@ -516,6 +524,9 @@ class Results extends Component {
 
       <label>City</label>
         <input name="city" type="text" value = {this.state.city} onChange= {(e) => this.handleCityFilter(e)}/>
+
+        </div>  
+        </div>   
 
         <div id = "gallery">
           <h3>Your matches</h3>

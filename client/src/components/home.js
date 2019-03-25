@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./header";
 import Footer from "./footer";
+import './home.css';
 import { Redirect } from "react-router-dom";
 
 class Home extends Component {
@@ -37,19 +38,17 @@ class Home extends Component {
 
 
     return (
-      <div className="App">
+      <div className="Home">
         <div>
           <div>
             <Header />
           </div>
 
           <section className="jumbotron text-center">
-            <div className="container">
+            <div className="jumbotronCover">
               <h1 className="jumbotron-heading">Be engaged and help others!</h1>
-              <p className="lead text-muted">
-                Something short and leading about the collection below—its
-                contents, the creator, etc. Make it short and sweet, but not too
-                short so folks don't simply skip over it entirely.
+              <p className="lead">
+                Hundreds of profiles of tech professionals so you can find the perfect match for you.
               </p>
               <p>
                 <a href="/results" className="btn btn-primary my-2">
@@ -61,137 +60,82 @@ class Home extends Component {
 
           <div className="text-center">
             <div className="container marketing">
-              <div className="row">
-                <div className="col-lg-4">
-                  <img
-                    className="rounded-circle"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                    alt="Generic placeholder"
-                    width="140"
-                    height="140"
-                  />
-                  <h2>Heading</h2>
-                  <p>
-                    Donec sed odio dui. Etiam porta sem malesuada magna mollis
-                    euismod. Nullam id dolor id nibh ultricies vehicula ut id
-                    elit. Morbi leo risus, porta ac consectetur ac, vestibulum
-                    at eros. Praesent commodo cursus magna.
-                  </p>
-                </div>
-                {/*<!-- /.col-lg-4 -->*/}
-                <div className="col-lg-4">
-                  <img
-                    className="rounded-circle"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                    alt="Generic placeholder"
-                    width="140"
-                    height="140"
-                  />
-                  <h2>Heading</h2>
-                  <p>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor
-                    ligula, eget lacinia odio sem nec elit. Cras mattis
-                    consectetur purus sit amet fermentum. Fusce dapibus, tellus
-                    ac cursus commodo, tortor mauris condimentum nibh.
-                  </p>
-                </div>
-                {/*<!-- /.col-lg-4 -->*/}
-                <div className="col-lg-4">
-                  <img
-                    className="rounded-circle"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                    alt="Generic placeholder"
-                    width="140"
-                    height="140"
-                  />
-                  <h2>Heading</h2>
-                  <p>
-                    Donec sed odio dui. Cras justo odio, dapibus ac facilisis
-                    in, egestas eget quam. Vestibulum id ligula porta felis
-                    euismod semper. Fusce dapibus, tellus ac cursus commodo,
-                    tortor mauris condimentum nibh, ut fermentum massa justo sit
-                    amet risus.
-                  </p>
-                </div>
-                {/*<!-- /.col-lg-4 -->*/}
-              </div>
+
               {/*<!-- /.row -->*/}
 
+              <h2 className="featurette-heading"> See what's on the blog </h2>
               {/*START THE FEATURETTES*/}
 
-              <hr className="featurette-divider" />
 
-              <div className="row featurette">
-                <div className="col-md-7">
+              <hr className="featurette-divider" />
+              <div className="row">
+                <div className="col-8">
                   <h2 className="featurette-heading">
-                    First featurette heading.{" "}
-                    <span className="text-muted">It'll blow your mind.</span>
+                    How being a mentor helped me be a better manager
+
                   </h2>
-                  <p className="lead">
+                  <p>
                     Donec ullamcorper nulla non metus auctor fringilla.
                     Vestibulum id ligula porta felis euismod semper. Praesent
                     commodo cursus magna, vel scelerisque nisl consectetur.
-                    Fusce dapibus, tellus ac cursus commodo.
+                    Fusce dapibus, tellus ac cursus commodo. <br />
+                    <strong>Read More...</strong>
                   </p>
-                </div>
-                <div className="col-md-5">
-                  <img
-                    className="featurette-image img-fluid mx-auto"
-                    data-src="holder.js/500x500/auto"
-                    alt="Generic placeholder image"
-                  />
-                </div>
+                  </div>
+                  <div className="col-4">
+                  <img src="https://images.unsplash.com/photo-1531538512164-e6c51ea63d20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
+                    alt="Generic placeholder image" className="imgblog"/>
+                  </div>
               </div>
 
-              <hr className="featurette-divider" />
 
-              <div className="row featurette">
-                <div className="col-md-7 order-md-2">
+
+
+              <hr className="featurette-divider" />
+              <div className="row">
+                <div className="col-8">
                   <h2 className="featurette-heading">
-                    Oh yeah, it's that good.{" "}
-                    <span className="text-muted">See for yourself.</span>
+                    Preparing to meet your mentor for the first time
+
                   </h2>
-                  <p className="lead">
+                  <p>
                     Donec ullamcorper nulla non metus auctor fringilla.
                     Vestibulum id ligula porta felis euismod semper. Praesent
                     commodo cursus magna, vel scelerisque nisl consectetur.
-                    Fusce dapibus, tellus ac cursus commodo.
+                    Fusce dapibus, tellus ac cursus commodo. <br />
+                    <strong>Read More...</strong>
                   </p>
-                </div>
-                <div className="col-md-5 order-md-1">
-                  <img
-                    className="featurette-image img-fluid mx-auto"
-                    data-src="holder.js/500x500/auto"
-                    alt="Generic placeholder image"
-                  />
-                </div>
+                  </div>
+                  <div className="col-4">
+                  <img src="https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+                    alt="Generic placeholder image" className="imgblog"/>
+                  </div>
               </div>
 
-              <hr className="featurette-divider" />
 
-              <div className="row featurette">
-                <div className="col-md-7">
+
+
+              <hr className="featurette-divider" />
+              <div className="row">
+                <div className="col-8">
                   <h2 className="featurette-heading">
-                    And lastly, this one.{" "}
-                    <span className="text-muted">Checkmate.</span>
+                    Mentorship Matchmaking
+
                   </h2>
-                  <p className="lead">
+                  <p>
                     Donec ullamcorper nulla non metus auctor fringilla.
                     Vestibulum id ligula porta felis euismod semper. Praesent
                     commodo cursus magna, vel scelerisque nisl consectetur.
-                    Fusce dapibus, tellus ac cursus commodo.
+                    Fusce dapibus, tellus ac cursus commodo. <br />
+                    <strong>Read More...</strong>
                   </p>
-                </div>
-                <div className="col-md-5">
-                  <img
-                    className="featurette-image img-fluid mx-auto"
-                    data-src="holder.js/500x500/auto"
-                    alt="Generic placeholder image"
-                  />
-                </div>
+                  </div>
+                  <div className="col-4">
+                  <img src="https://images.unsplash.com/photo-1467799824547-58bcafb6dbc8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+                    alt="Generic placeholder image" className="imgblog"/>
+                  </div>
               </div>
 
-              <hr className="featurette-divider" />
 
               {/*<!-- /END THE FEATURETTES -->*/}
             </div>

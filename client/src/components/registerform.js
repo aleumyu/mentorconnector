@@ -143,7 +143,10 @@ class RegisterForm extends Component {
     }
 
     return (
-      <div className="App">
+      <div className="RegFormApp">
+      <div className="Form">
+
+
         <h2>Register for MentorConnector</h2>
         <p>
           MentorConnector provides mentorship, community and networking for
@@ -631,7 +634,8 @@ class RegisterForm extends Component {
                   value={this.state.experience}
                   onChange={e => this.updateSelect(e)}
                 >
-                  <option value="0">Student / New graduate (0 years)</option>
+                  <option value="0">Select</option>
+                  <option value="1">Student / New graduate (0 years)</option>
                   <option value="5">Early career (0-5 years)</option>
                   <option value="10">Mid level (6-10 years)</option>
                   <option value="1010">Established (11+ years)</option>
@@ -766,6 +770,7 @@ class RegisterForm extends Component {
             </ul>
           </fieldset>
         </form>
+        </div>  
       </div>
     );
   }

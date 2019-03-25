@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import AlertMessage from './alertMessage';
-import RegisterForm from "./registerform";
 import { Redirect } from 'react-router-dom';
 
 class Register extends Component {
@@ -69,7 +68,7 @@ class Register extends Component {
  
 		return (
 			<div>
-				<Modal {...this.props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+				<Modal {...this.props} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-vcenter">Register with MentorConnect</Modal.Title>
 					</Modal.Header>
@@ -104,9 +103,6 @@ class Register extends Component {
 							Already have an Account? <button onClick={this.props.onSwitch}> Sign in Now!</button>
 						</p>
 					</Modal.Body>
-					<Modal.Footer>
-						<Button onClick={this.props.onHide}>Close</Button>
-					</Modal.Footer>
 				</Modal>
 			</div>
 		);

@@ -1,3 +1,15 @@
+.Form {
+  text-align: left;
+  padding: 30px;
+  width: 45rem;
+  background:#b6ccef;
+}
+
+.RegFormApp {
+  background: url("https://images.unsplash.com/photo-1550055280-766ba3e748b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=376&q=80");
+}
+
+
 ul {
     list-style-type: none;
   }
@@ -5,12 +17,19 @@ ul {
 
 input, label {
   display:block;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .form-group {
   display: inline;
+  width: 10px;
 }
 
 label {
   font-weight: bold;
 }
+
+input, select {
+  width:200px;        
+ }

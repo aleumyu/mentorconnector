@@ -55,7 +55,7 @@ class SignIn extends Component {
 
       <Modal
         {...this.props}
-        size="lg"
+        size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -74,9 +74,6 @@ class SignIn extends Component {
 				<p>Don't have an Account? <button onClick={this.props.onSwitch}> Register Now!</button></p>
 
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
-        </Modal.Footer>
       </Modal>
 
     );

@@ -8,9 +8,7 @@ a:hover {
 
 /* Custom default button */
 .btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-
+.btn-secondary:hover {
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #fff;
   border: .05rem solid #fff;
@@ -26,11 +24,9 @@ body {
 }
 
 #landingbackground {
-  background: url(images/bg.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(images/bg.jpg) no-repeat center center fixed; 
   background-size: cover;
+  height: 720px;
 }
 
 .cover-container {
@@ -43,7 +39,9 @@ body {
 .cover {
   padding: 0 1.5rem;
   margin-top: 40%;
-  color:green;
+  color:white;
+  font-size: 50px;
+  font-weight: bold;
 }
 .cover .btn-lg {
   padding: .75rem 1.25rem;

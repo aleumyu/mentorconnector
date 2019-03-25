@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Button, Form } from 'react-bootstrap';
 import { NavLink, Redirect } from 'react-router-dom';
+import './header.css';
 //const LocalStrategy = require('passport-local').Strategy;
 
 
@@ -104,12 +105,12 @@ componentDidMount() {
       <Navbar fixed="top" bg="dark" variant="dark">
         <Navbar.Brand href="#home">Mentor Connector</Navbar.Brand>
         <Nav className="mr-auto">
-          <NavLink to="/home">Home</NavLink>
-          <NavLink to={`/profile/${this.state.userId}`}>My Profile</NavLink>
-          <NavLink to="/inbox">Inbox</NavLink>
+          <NavLink to="/home" className="menulink">Home</NavLink>
+          <NavLink to={`/profile/${this.state.userId}`} className="menulink">My Profile</NavLink>
+          <NavLink to="/inbox" className="menulink">Inbox</NavLink>
         </Nav>
         <Form inline>
-          <Button variant="outline-danger" onClick={(e) => this.signOut(e)}>Log Out</Button>
+          <Button  onClick={(e) => this.signOut(e)}>Log Out</Button>
         </Form>
     </Navbar>
 

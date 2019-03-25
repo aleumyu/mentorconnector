@@ -4,7 +4,8 @@ img {
 }
 
 .row {
-    max-width: 50%;
+    max-width: 70%;
+    margin-left: 20px;
 }
 
 .col1 {
@@ -19,6 +20,7 @@ img {
 
 .body {
   padding-top: 70px;
+  padding-left:20px;
 }
 
 li {
@@ -28,6 +30,7 @@ li {
 
 input, label {
   display:block;
+  width: 100px;   
 }
 
 .form-group {
