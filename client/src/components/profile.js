@@ -19,7 +19,7 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     const {id} = this.props.match.params;
     fetch('/login') 
     .then(res => {
